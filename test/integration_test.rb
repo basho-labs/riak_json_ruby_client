@@ -5,6 +5,7 @@ describe "RiakJson Ruby Client" do
     it "can perform an HTTP /ping to the RiakJson cluster" do
       client = RiakJson::Client.new
       response = client.ping
+      response.must_equal 'OK'
       response.code.must_equal 200
     end
   end

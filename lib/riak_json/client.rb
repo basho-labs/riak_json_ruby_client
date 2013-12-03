@@ -1,4 +1,5 @@
 require 'virtus'
+require 'rest-client'
 
 module RiakJson
   class Client
@@ -7,7 +8,7 @@ module RiakJson
     attribute :options, Hash
     
     def ping
-      true
+      response = RestClient.get('http://localhost:8098/ping')
     end
   
     def collection(name)
