@@ -4,7 +4,8 @@ describe "RiakJson Ruby Client" do
   context "connects to RiakJson" do
     it "can perform an HTTP /ping to the RiakJson cluster" do
       client = RiakJson::Client.new
-      assert client.ping
+      response = client.ping
+      response.code.must_equal 200
     end
   end
   
