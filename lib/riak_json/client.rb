@@ -1,4 +1,3 @@
-require 'virtus'
 require 'rest-client'
 
 module RiakJson
@@ -6,6 +5,7 @@ module RiakJson
     BASE_URL = 'http://localhost:8098'
     
     def collection(collection_name)
+      RiakJson::Collection.new(collection_name)
     end
     
     def ping

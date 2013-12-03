@@ -1,12 +1,13 @@
-require 'virtus'
-
 module RiakJson
   class Collection
-    include Virtus
-
-    attribute :name, String
-    attribute :client, RiakJson::Client
-
+#    attribute :name, String
+#    attribute :client, RiakJson::Client
+    attr_accessor :name
+    
+    def initialize(collection_name)
+      @name = collection_name
+    end
+    
     def insert(document)
       self.client.send_request(
           :method => :post,
