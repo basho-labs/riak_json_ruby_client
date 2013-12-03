@@ -1,6 +1,13 @@
 require 'helper'
 
 describe "RiakJson Ruby Client" do
+  context "connects to RiakJson" do
+    it "can perform an HTTP /ping to the RiakJson cluster" do
+      client = RiakJson::Client.new
+      assert client.ping
+    end
+  end
+  
   context "performs read/write/delete on a Document" do
     it "issues PUT requests to write a new document"
     it "issues POST requests to update an existing document"
