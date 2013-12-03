@@ -4,6 +4,10 @@ require 'rest-client'
 module RiakJson
   class Client
     BASE_URL = 'http://localhost:8098'
+    
+    def collection(collection_name)
+    end
+    
     def ping
       response = self.get_request('/ping')
     end
