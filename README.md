@@ -47,6 +47,12 @@ Since this gem is not released to the public yet, build it locally:
 
     schema_result = collection.get_schema()
 
+## Testing
+```
+bundle install
+bundle exec rake test
+```
+
 ## Contributing
 
 1. Fork it
