@@ -8,6 +8,8 @@ describe "RiakJson Ruby Client" do
       response.must_equal 'OK'
       response.code.must_equal 200
     end
+    
+    it "raises an ArgumentError on send_request with invalid HTTP method"
   end
   
   context "performs read/write/delete on a Document" do
