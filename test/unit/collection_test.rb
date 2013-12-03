@@ -1,7 +1,7 @@
 require 'helper'
 
 describe "a RiakJson Collection" do
-  it "should pass" do
-    assert true
+  it "is initialized" do
+    col = RiakJson::Collection.new
   end
 end
