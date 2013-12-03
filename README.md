@@ -1,6 +1,6 @@
 # Riak Json Ruby Client
 
-A Ruby client for Riak Json
+A Ruby client for [Riak Json](https://github.com/basho-labs/riak_json/)
 
 ## Installation
 
@@ -8,7 +8,7 @@ Since this gem is not released to the public yet, build it locally:
 
     git clone git@github.com:basho/riak_json_ruby_client.git
     cd riak_json_ruby_client && gem build riak_json
-    gem install riak_json-0.0.1.gem
+    gem install riak_json-0.0.2.gem
 
 ## Usage
 
