@@ -11,10 +11,10 @@ Since this gem is not released to the public yet, build it locally:
     gem install riak_json-0.0.2.gem
 
 ## Usage
-
+```ruby
     require 'riak_json'
 
-    client = RiakJson::Client.new(:options => {:host => "http://localhost:8098"})
+    client = RiakJson::Client.new('localhost', 8098)
     collection = client.collection("testing")
 
     schema = [{
@@ -46,6 +46,7 @@ Since this gem is not released to the public yet, build it locally:
     key_result = collection.find_by_key("my_key")
 
     schema_result = collection.get_schema()
+```
 
 ## Testing
 ```
