@@ -9,8 +9,7 @@ module RiakJson
       self.send_request(url, :get)
     end
     
-    def send_request(relative_url, http_method, data=nil)
-      url = RiakJson::Client::BASE_URL + relative_url
+    def send_request(url, http_method, data=nil)
       case http_method
         when :get
           response = RestClient.get(url)
@@ -24,8 +23,6 @@ module RiakJson
   end
   
   class Client
-    BASE_URL = 'http://localhost:8098'
-    
     attr_accessor :collection_cache
     attr_accessor :transport
     attr_accessor :host, :port
@@ -54,15 +51,15 @@ module RiakJson
     end
     
     def get_json_object(collection_name, key)
-      self.transport.send_request("/document/collection/#{collection_name}/#{key}", :get)
+      self.transport.send_request("#{self.base_collection_url}/#{collection_name}/#{key}", :get)
     end
     
     def insert_json_object(collection_name, key, json)
-      self.transport.send_request("/document/collection/#{collection_name}/#{key}", :put, json)
+      self.transport.send_request("#{self.base_collection_url}/#{collection_name}/#{key}", :put, json)
     end
     
     def ping
-      response = self.transport.get_request('/ping')
+      response = self.transport.get_request("#{self.base_riak_url}/ping")
     end
 
 #    def send_request(req_opts)
