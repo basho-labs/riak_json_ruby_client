@@ -11,6 +11,10 @@ module RiakJson
       @client = client
     end
     
+    def get_raw_json(key)
+      self.client.get_json_object(self.name, key)
+    end
+    
     def insert_raw_json(key, json_obj)
       self.client.insert_json_object(self.name, key, json_obj)
     end

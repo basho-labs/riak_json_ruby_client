@@ -12,7 +12,6 @@ module RiakJson
         when :get
           response = RestClient.get(url)
         when :put
-          puts url
           response = RestClient.put url, data, { :content_type => 'application/json' }
         else
           raise ArgumentError, "Invalid HTTP :method - #{http_method}"
@@ -34,6 +33,10 @@ module RiakJson
     
     def collection(name)
       self.collection_cache[name] ||= RiakJson::Collection.new(name, self)
+    end
+    
+    def get_json_object(collection_name, key)
+      self.transport.send_request("/document/collection/#{collection_name}/#{key}", :get)
     end
     
     def insert_json_object(collection_name, key, json)
