@@ -6,6 +6,11 @@ describe "a RiakJson Client" do
       client = test_client
       client.collection_cache.must_be_empty
     end
+    
+    it "initializes a transport object" do
+      client = test_client
+      client.transport.must_be_kind_of RiakJson::ClientTransport
+    end
   end
 
   it "uses its collection cache when instantiating collections" do
