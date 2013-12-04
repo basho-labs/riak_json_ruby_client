@@ -50,7 +50,7 @@ describe "a RiakJson Client" do
     client.transport.verify
   end
   
-  it "writes JSON objects to collections" do
+  it "writes a new JSON objects to collections" do
     client = test_client
     collection_name = 'test_collection'
     test_key = 'document-key-123'
@@ -60,6 +60,19 @@ describe "a RiakJson Client" do
     # Test that a client.insert_json_object call results in an HTTP PUT request to /collection_name/key
     client.transport.expect :send_request, nil, ["#{client.base_collection_url}/test_collection/document-key-123", :put, test_json]
     client.insert_json_object(collection_name, test_key, test_json)
+    client.transport.verify
+  end
+  
+  it "updates an existing JSON object in a collection" do
+    client = test_client
+    collection_name = 'test_collection'
+    test_key = 'document-key-123'
+    test_json = { :key => test_key, :field_one => '123', :field_two => 'abc' }.to_json
+    client.transport = MiniTest::Mock.new
+    
+    # Test that a client.update_json_object call results in an HTTP POST request to /collection_name/key
+    client.transport.expect :send_request, nil, ["#{client.base_collection_url}/test_collection/document-key-123", :post, test_json]
+    client.update_json_object(collection_name, test_key, test_json)
     client.transport.verify
   end
 end

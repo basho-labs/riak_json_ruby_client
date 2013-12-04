@@ -15,6 +15,8 @@ module RiakJson
           response = RestClient.get(url)
         when :put
           response = RestClient.put url, data, { :content_type => 'application/json' }
+        when :post
+          response = RestClient.post url, data, { :content_type => 'application/json' }
         else
           raise ArgumentError, "Invalid HTTP :method - #{http_method}"
       end
@@ -62,6 +64,10 @@ module RiakJson
       response = self.transport.get_request("#{self.base_riak_url}/ping")
     end
 
+    def update_json_object(collection_name, key, json)
+      self.transport.send_request("#{self.base_collection_url}/#{collection_name}/#{key}", :post, json)
+    end
+    
 #    def send_request(req_opts)
 #      uri = URI.parse("#{self.options[:host]}#{req_opts[:path]}")
 #      http = Net::HTTP.new(uri.host, uri.port)

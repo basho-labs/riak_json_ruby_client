@@ -19,6 +19,10 @@ module RiakJson
       self.client.insert_json_object(self.name, key, json_obj)
     end
     
+    def update_raw_json(key, json_obj)
+      self.client.update_json_object(self.name, key, json_obj)
+    end
+    
 #    def insert(document)
 #      self.client.send_request(
 #          :method => :post,
