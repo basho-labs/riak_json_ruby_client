@@ -14,4 +14,16 @@ describe "a RiakJson Client" do
     collection2 = client.collection('test_collection')
     collection1.must_be_same_as collection2, "Client uses collection cache, collection1 and collection2 should be identical"
   end
+  
+  it "writes JSON objects to collections" do
+    client = test_client
+    collection_name = 'test_collection'
+    test_key = 'document-key-123'
+    test_json = { :key => test_key, :field_one => '123', :field_two => 'abc' }.to_json
+    client.transport = MiniTest::Mock.new
+    client.transport.expect :send_request, nil, ['/test_collection/document-key-123', :put, test_json]
+    
+    client.insert_json_object(collection_name, test_key, test_json)
+    client.transport.verify
+  end
 end
