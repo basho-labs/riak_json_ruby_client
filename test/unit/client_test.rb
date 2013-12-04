@@ -19,6 +19,18 @@ describe "a RiakJson Client" do
     end
   end
 
+  context "knows the URLs to Riak and RiakJSON API endpoints" do
+    it "knows riak cluster and riakjson urls" do
+      client = test_client
+      client.base_riak_url.wont_be_empty
+      client.base_riak_json_url.wont_be_empty
+    end
+    it "knows riakjson collection url" do
+      client = test_client
+      client.base_collection_url.wont_be_empty
+    end
+  end
+  
   it "uses its collection cache when instantiating collections" do
     client = test_client
     collection1 = client.collection('test_collection')

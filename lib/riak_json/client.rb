@@ -1,7 +1,7 @@
 require 'rest-client'
 
 module RiakJson
-  RIAK_TEST_HOST = 'http://127.0.0.1'
+  RIAK_TEST_HOST = '127.0.0.1'
   RIAK_TEST_PORT = 8098
 
   class ClientTransport
@@ -37,6 +37,18 @@ module RiakJson
       @port = port
     end
     
+    def base_collection_url
+      "#{self.base_riak_json_url}/collection"
+    end
+    
+    def base_riak_url
+      "http://#{self.host}:#{self.port}"
+    end
+
+    def base_riak_json_url
+      "#{self.base_riak_url}/document"
+    end
+        
     def collection(name)
       self.collection_cache[name] ||= RiakJson::Collection.new(name, self)
     end
