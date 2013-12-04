@@ -1,13 +1,20 @@
 require 'rest-client'
 
 module RiakJson
+  class ClientTransport
+    def send_request(relative_url, method, data)
+    end
+  end
+  
   class Client
     BASE_URL = 'http://localhost:8098'
     
     attr_accessor :collection_cache
+    attr_accessor :transport
     
     def initialize
       @collection_cache = {}
+      @transport = RiakJson::ClientTransport.new
     end
     
     def collection(name)
@@ -22,6 +29,10 @@ module RiakJson
       self.send_request({
         :url => url,
         :method => :get})
+    end
+    
+    def insert_json_object(collection_name, key, json)
+      self.transport.send_request("/#{collection_name}/#{key}", :put, json)
     end
     
     def send_request(request_options={})
