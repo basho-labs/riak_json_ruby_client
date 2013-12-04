@@ -75,4 +75,16 @@ describe "a RiakJson Client" do
     client.update_json_object(collection_name, test_key, test_json)
     client.transport.verify
   end
+
+  it "deletes an existing JSON object in a collection" do
+    client = test_client
+    collection_name = 'test_collection'
+    test_key = 'document-key-123'
+    client.transport = MiniTest::Mock.new
+    
+    # Test that a client.delete_json_object call results in an HTTP DELETE request to /collection_name/key
+    client.transport.expect :send_request, nil, ["#{client.base_collection_url}/test_collection/document-key-123", :delete]
+    client.delete_json_object(collection_name, test_key)
+    client.transport.verify
+  end
 end

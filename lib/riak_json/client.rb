@@ -17,6 +17,8 @@ module RiakJson
           response = RestClient.put url, data, { :content_type => 'application/json' }
         when :post
           response = RestClient.post url, data, { :content_type => 'application/json' }
+        when :delete
+          response = RestClient.delete url
         else
           raise ArgumentError, "Invalid HTTP :method - #{http_method}"
       end
@@ -51,7 +53,11 @@ module RiakJson
     def collection(name)
       self.collection_cache[name] ||= RiakJson::Collection.new(name, self)
     end
-    
+
+    def delete_json_object(collection_name, key)
+      self.transport.send_request("#{self.base_collection_url}/#{collection_name}/#{key}", :delete)
+    end
+
     def get_json_object(collection_name, key)
       self.transport.send_request("#{self.base_collection_url}/#{collection_name}/#{key}", :get)
     end

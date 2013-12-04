@@ -11,6 +11,10 @@ module RiakJson
       @client = client
     end
     
+    def delete_raw_json(key)
+      self.client.delete_json_object(self.name, key)
+    end
+    
     def get_raw_json(key)
       self.client.get_json_object(self.name, key)
     end
