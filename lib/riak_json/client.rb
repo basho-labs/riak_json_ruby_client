@@ -11,6 +11,9 @@ module RiakJson
       case http_method
         when :get
           response = RestClient.get(url)
+        when :put
+          puts url
+          response = RestClient.put url, data, { :content_type => 'application/json' }
         else
           raise ArgumentError, "Invalid HTTP :method - #{http_method}"
       end
@@ -38,7 +41,7 @@ module RiakJson
     end
   
     def insert_json_object(collection_name, key, json)
-      self.transport.send_request("/#{collection_name}/#{key}", :put, json)
+      self.transport.send_request("/document/collection/#{collection_name}/#{key}", :put, json)
     end
     
 #    def send_request(req_opts)

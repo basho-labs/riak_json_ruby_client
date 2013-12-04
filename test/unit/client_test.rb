@@ -23,7 +23,7 @@ describe "a RiakJson Client" do
     client.transport = MiniTest::Mock.new
     
     # Test that a client.insert_json_object call results in an HTTP PUT request to /collection_name/key
-    client.transport.expect :send_request, nil, ['/test_collection/document-key-123', :put, test_json]
+    client.transport.expect :send_request, nil, ['/document/collection/test_collection/document-key-123', :put, test_json]
     client.insert_json_object(collection_name, test_key, test_json)
     client.transport.verify
   end
