@@ -35,7 +35,7 @@ describe "a RiakJson Collection" do
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-123'
 
-      # Test that a collection.insert(doc) results in a call to client.insert_json_object
+      # Test that a collection.insert_raw_json(doc) results in a call to client.insert_json_object
       collection.client = MiniTest::Mock.new
       collection.client.expect :get_json_object, nil, [collection_name, test_key]
       collection.get_raw_json(test_key)
@@ -50,10 +50,25 @@ describe "a RiakJson Collection" do
       test_key = 'document-key-123'
       json_obj = { :key => test_key, :field_one => '123', :field_two => 'abc' }.to_json
 
-      # Test that a collection.insert(doc) results in a call to client.insert_json_object
+      # Test that a collection.insert_raw_json(doc) results in a call to client.insert_json_object
       collection.client = MiniTest::Mock.new
       collection.client.expect :insert_json_object, nil, [collection_name, test_key, json_obj]
       collection.insert_raw_json(test_key, json_obj)
+      collection.client.verify
+    end
+    
+    it "updates a raw JSON object into a collection/key" do
+      client = test_client
+      collection_name = 'test_collection'
+      collection = client.collection(collection_name)  # create a new collection object
+    
+      test_key = 'document-key-123'
+      json_obj = { :key => test_key, :field_one => '123', :field_two => 'abc' }.to_json
+    
+      # Test that a collection.update_raw_json(doc) results in a call to client.update_json_object
+      collection.client = MiniTest::Mock.new
+      collection.client.expect :update_json_object, nil, [collection_name, test_key, json_obj]
+      collection.update_raw_json(test_key, json_obj)
       collection.client.verify
     end
     
@@ -63,7 +78,7 @@ describe "a RiakJson Collection" do
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-123'
     
-      # Test that a collection.insert(doc) results in a call to client.insert_json_object
+      # Test that a collection.delete_raw_json(doc) results in a call to client.delete_json_object
       collection.client = MiniTest::Mock.new
       collection.client.expect :delete_json_object, nil, [collection_name, test_key]
       collection.delete_raw_json(test_key)
