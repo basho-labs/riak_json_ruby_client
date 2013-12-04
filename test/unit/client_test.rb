@@ -15,6 +15,18 @@ describe "a RiakJson Client" do
     collection1.must_be_same_as collection2, "Client uses collection cache, collection1 and collection2 should be identical"
   end
   
+  it "reads JSON objects from collections" do
+    client = test_client
+    collection_name = 'test_collection'
+    test_key = 'document-key-123'
+    client.transport = MiniTest::Mock.new
+    
+    # Test that a client.get_json_object call results in an HTTP GET request to /collection_name/key
+    client.transport.expect :send_request, nil, ['/document/collection/test_collection/document-key-123', :get]
+    client.get_json_object(collection_name, test_key)
+    client.transport.verify
+  end
+  
   it "writes JSON objects to collections" do
     client = test_client
     collection_name = 'test_collection'
