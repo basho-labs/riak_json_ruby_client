@@ -2,7 +2,19 @@ require 'rest-client'
 
 module RiakJson
   class ClientTransport
-    def send_request(relative_url, method, data)
+    def get_request(url)
+      self.send_request(url, :get)
+    end
+    
+    def send_request(relative_url, http_method, data=nil)
+      url = RiakJson::Client::BASE_URL + relative_url
+      case http_method
+        when :get
+          response = RestClient.get(url)
+        else
+          raise ArgumentError, "Invalid HTTP :method - #{http_method}"
+      end
+      response
     end
   end
   
@@ -22,31 +34,13 @@ module RiakJson
     end
     
     def ping
-      response = self.get_request('/ping')
+      response = self.transport.get_request('/ping')
     end
   
-    def get_request(url)
-      self.send_request({
-        :url => url,
-        :method => :get})
-    end
-    
     def insert_json_object(collection_name, key, json)
       self.transport.send_request("/#{collection_name}/#{key}", :put, json)
     end
     
-    def send_request(request_options={})
-      url = RiakJson::Client::BASE_URL + request_options[:url]
-      http_method = request_options[:method]
-      case http_method
-        when :get
-          response = RestClient.get(url)
-        else
-          raise ArgumentError, "Invalid HTTP :method - #{http_method}"
-      end
-      response
-    end
-
 #    def send_request(req_opts)
 #      uri = URI.parse("#{self.options[:host]}#{req_opts[:path]}")
 #      http = Net::HTTP.new(uri.host, uri.port)
