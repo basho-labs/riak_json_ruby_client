@@ -36,14 +36,14 @@ module RiakJson
       self.collection_cache[name] ||= RiakJson::Collection.new(name, self)
     end
     
-    def ping
-      response = self.transport.get_request('/ping')
-    end
-  
     def insert_json_object(collection_name, key, json)
       self.transport.send_request("/document/collection/#{collection_name}/#{key}", :put, json)
     end
     
+    def ping
+      response = self.transport.get_request('/ping')
+    end
+
 #    def send_request(req_opts)
 #      uri = URI.parse("#{self.options[:host]}#{req_opts[:path]}")
 #      http = Net::HTTP.new(uri.host, uri.port)
