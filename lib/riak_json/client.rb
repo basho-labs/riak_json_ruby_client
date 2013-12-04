@@ -4,7 +4,7 @@ module RiakJson
   class Client
     BASE_URL = 'http://localhost:8098'
     
-    attr_reader :collection_cache
+    attr_accessor :collection_cache
     
     def initialize
       @collection_cache = {}
