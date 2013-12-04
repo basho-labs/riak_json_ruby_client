@@ -29,18 +29,18 @@ describe "a RiakJson Collection" do
   end
   
   context "uses a RiakJson Client to" do
-    it "insert a JSON document into a collection/key" do
+    it "insert a raw JSON object into a collection/key" do
       client = test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)  # create a new collection object
 
       test_key = 'document-key-123'
-      document = { :key => test_key, :field_one => '123', :field_two => 'abc' }.to_json
+      json_obj = { :key => test_key, :field_one => '123', :field_two => 'abc' }.to_json
 
       # Test that a collection.insert(doc) results in a call to client.insert_json_object
       collection.client = MiniTest::Mock.new
-      collection.client.expect :insert_json_object, nil, [collection_name, test_key, document]
-      collection.insert(document)
+      collection.client.expect :insert_json_object, nil, [collection_name, test_key, json_obj]
+      collection.insert_raw_json(test_key, json_obj)
       collection.client.verify
     end
   end
