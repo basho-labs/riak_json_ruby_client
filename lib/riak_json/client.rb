@@ -11,7 +11,7 @@ module RiakJson
     end
     
     def collection(name)
-      RiakJson::Collection.new(name, self)
+      self.collection_cache[name] ||= RiakJson::Collection.new(name, self)
     end
     
     def ping
@@ -33,12 +33,7 @@ module RiakJson
       end
       response
     end
-    
-#    def collection(name)
-#      @collection_cache ||= {}
-#      @collection_cache[name] ||= RiakJson::Collection.new(:client => self, :name => name)
-#    end
-#  
+
 #    def send_request(req_opts)
 #      uri = URI.parse("#{self.options[:host]}#{req_opts[:path]}")
 #      http = Net::HTTP.new(uri.host, uri.port)
