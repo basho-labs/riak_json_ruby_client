@@ -39,6 +39,9 @@ describe "a RiakJson Collection" do
       # Now delete that object
       response = collection.delete_raw_json(test_key)
       response.code.must_equal 204
+      
+      # Issue a get to make sure it now returns a 404 / Resource not found exception
+      lambda { collection.get_raw_json(test_key) }.must_raise RestClient::ResourceNotFound
     end
   end
 
