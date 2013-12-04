@@ -4,8 +4,14 @@ module RiakJson
   class Client
     BASE_URL = 'http://localhost:8098'
     
-    def collection(collection_name)
-      RiakJson::Collection.new(collection_name, self)
+    attr_reader :collection_cache
+    
+    def initialize
+      @collection_cache = {}
+    end
+    
+    def collection(name)
+      RiakJson::Collection.new(name, self)
     end
     
     def ping
