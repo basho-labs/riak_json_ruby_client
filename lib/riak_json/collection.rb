@@ -1,11 +1,14 @@
 module RiakJson
   class Collection
-#    attribute :name, String
-#    attribute :client, RiakJson::Client
     attr_accessor :name
+    attr_accessor :client
     
-    def initialize(collection_name)
+    def initialize(collection_name, client)
+      if collection_name.nil? or collection_name.empty?
+        raise ArgumentError, "Invalid collection name (must not be nil or empty)"
+      end
       @name = collection_name
+      @client = client
     end
     
     def insert(document)

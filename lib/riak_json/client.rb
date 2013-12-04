@@ -5,7 +5,7 @@ module RiakJson
     BASE_URL = 'http://localhost:8098'
     
     def collection(collection_name)
-      RiakJson::Collection.new(collection_name)
+      RiakJson::Collection.new(collection_name, self)
     end
     
     def ping
