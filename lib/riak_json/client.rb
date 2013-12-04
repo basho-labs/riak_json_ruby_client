@@ -19,7 +19,9 @@ module RiakJson
     end
   
     def get_request(url)
-      self.send_request(url: url, method: :get)
+      self.send_request({
+        :url => url,
+        :method => :get})
     end
     
     def send_request(request_options={})
