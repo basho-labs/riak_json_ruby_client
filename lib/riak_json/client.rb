@@ -1,6 +1,9 @@
 require 'rest-client'
 
 module RiakJson
+  RIAK_TEST_HOST = 'http://127.0.0.1'
+  RIAK_TEST_PORT = 8098
+
   class ClientTransport
     def get_request(url)
       self.send_request(url, :get)
@@ -25,10 +28,13 @@ module RiakJson
     
     attr_accessor :collection_cache
     attr_accessor :transport
+    attr_accessor :host, :port
     
-    def initialize
+    def initialize(host=RiakJson::RIAK_TEST_HOST, port=RiakJson::RIAK_TEST_PORT)
       @collection_cache = {}
       @transport = RiakJson::ClientTransport.new
+      @host = host
+      @port = port
     end
     
     def collection(name)

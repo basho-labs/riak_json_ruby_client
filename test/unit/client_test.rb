@@ -7,6 +7,12 @@ describe "a RiakJson Client" do
       client.collection_cache.must_be_empty
     end
     
+    it "has a riak host and port" do
+      client = test_client
+      client.host.must_equal RiakJson::RIAK_TEST_HOST
+      client.port.must_equal RiakJson::RIAK_TEST_PORT
+    end
+    
     it "initializes a transport object" do
       client = test_client
       client.transport.must_be_kind_of RiakJson::ClientTransport
