@@ -118,4 +118,25 @@ describe "a RiakJson Collection" do
       collection.client.verify
     end
   end
+  
+  context "can read, write and delete Documents" do
+    it "can insert a Document" do
+      client = test_client
+      collection_name = 'test_collection'
+      collection = client.collection(collection_name)
+
+      # A Collection performs an insert by invoking doc.key and doc.to_json
+      # and then sending along the raw json object to its client
+      test_key = 'key-123'
+      test_json = { :field_one => 'abc' }
+      doc = RiakJson::Document.new(test_key, test_json)
+      
+      client = MiniTest::Mock.new
+      client.expect :insert_json_object, nil, [collection_name, test_key, String]
+      collection.client = client
+      
+      collection.insert(doc)
+      client.verify
+    end
+  end
 end
