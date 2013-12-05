@@ -8,9 +8,11 @@ module RiakJson
 #    attribute :json, Hash
     
     attr_accessor :key
+    attr_accessor :body
     
-    def initialize(key=nil)
+    def initialize(key=nil, body=nil)
       @key = key
+      @body = body
     end
     
   end
