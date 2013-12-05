@@ -11,10 +11,6 @@ module RiakJson
       @client = client
     end
     
-    def create_schema(schema_json)
-      self.client.insert_schema_json(self.name, schema_json)
-    end
-    
     def delete_raw_json(key)
       self.client.delete_json_object(self.name, key)
     end
@@ -29,6 +25,10 @@ module RiakJson
     
     def insert_raw_json(key, json_obj)
       self.client.insert_json_object(self.name, key, json_obj)
+    end
+    
+    def set_schema(schema_json)
+      self.client.set_schema_json(self.name, schema_json)
     end
     
     def update_raw_json(key, json_obj)

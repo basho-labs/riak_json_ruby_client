@@ -89,9 +89,9 @@ describe "a RiakJson Client" do
   end
   
   context "performs document Schema administration" do
-    it "inserts a schema json object into a collection's schema api endpoint" do
+    it "sets a schema json object into a collection's schema api endpoint" do
       client = test_client
-      collection_name = 'test_collection-new'
+      collection_name = 'test_collection'
       client.transport = MiniTest::Mock.new
       schema_json = [{
         :name => "field_one",
@@ -104,7 +104,7 @@ describe "a RiakJson Client" do
         }].to_json
       
       client.transport.expect :send_request, nil, ["#{client.base_collection_url}/#{collection_name}/schema", :put, schema_json]
-      client.insert_schema_json(collection_name, schema_json)
+      client.set_schema_json(collection_name, schema_json)
       client.transport.verify
     end
   end

@@ -87,7 +87,7 @@ describe "a RiakJson Collection" do
   end
   
   context "administers Schemas for collections" do
-    it "creates a new schema object for a collection" do
+    it "sets a schema object for a collection" do
       client = test_client
       collection_name = 'test_collection-new'
       collection = client.collection(collection_name)
@@ -102,8 +102,8 @@ describe "a RiakJson Collection" do
         }].to_json
       
       collection.client = MiniTest::Mock.new
-      collection.client.expect :insert_schema_json, nil, [collection_name, schema_json]
-      collection.create_schema(schema_json)
+      collection.client.expect :set_schema_json, nil, [collection_name, schema_json]
+      collection.set_schema(schema_json)
       collection.client.verify
     end
     

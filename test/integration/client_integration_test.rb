@@ -13,7 +13,7 @@ describe "RiakJson Ruby Client" do
   end
   
   context "performs document Schema administration" do
-    it "issues PUT requests to create a new schema for a collection" do
+    it "issues PUT requests to set a schema object for a collection" do
       client = test_client
       collection_name = 'test_collection'
       schema_json = [{
@@ -25,7 +25,7 @@ describe "RiakJson Ruby Client" do
         :type => "text",
         :require => false
         }].to_json
-      response = client.insert_schema_json(collection_name, schema_json)
+      response = client.set_schema_json(collection_name, schema_json)
       response.code.must_equal 204
     end
 
