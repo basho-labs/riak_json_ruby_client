@@ -31,6 +31,10 @@ module RiakJson
       self.client.insert_json_object(self.name, key, json_obj)
     end
     
+    def remove(document)
+      self.delete_raw_json(document.key)
+    end
+    
     def set_schema(schema_json)
       self.client.set_schema_json(self.name, schema_json)
     end

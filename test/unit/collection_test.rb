@@ -157,5 +157,23 @@ describe "a RiakJson Collection" do
       collection.update(doc)
       client.verify
     end
+    
+    it "can remove a Document" do
+      client = test_client
+      collection_name = 'test_collection'
+      collection = client.collection(collection_name)
+    
+      # A Collection performs a remove by invoking doc.key
+      # and then sending along the key to its client
+      test_key = 'key-123'
+      doc = RiakJson::Document.new(test_key)
+      
+      client = MiniTest::Mock.new
+      client.expect :delete_json_object, nil, [collection_name, test_key]
+      collection.client = client
+      
+      collection.remove(doc)
+      client.verify
+    end
   end
 end
