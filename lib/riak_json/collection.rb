@@ -85,20 +85,6 @@ module RiakJson
 #          :collection => self
 #      )
 #    end
-#
-#    def create_schema(json)
-#      self.client.send_request(
-#          :method => :post,
-#          :path => "/schemas/#{self.name}",
-#          :data => json
-#      )
-#    end
-#
-#    def get_schema
-#      JSON.parse(self.client.send_request(
-#                     :method => :get,
-#                     :path => "/schemas/#{self.name}"
-#                 ))
-#    end
+
   end
 end
