@@ -21,7 +21,15 @@ describe "RiakJson Ruby Client" do
       response = client.get_schema(collection_name)
       response.code.must_equal 200
     end
-
+    
+    it "receives a 404 Exception when reading a non-existing schema" do
+      # Note: A default schema is auto-created whenever a document is written to a collection
+      # For a schema to not exist, no schemas could have been stored for that collection, and no documents inserted
+      client = test_client
+      collection_name = 'non-existing-collection'
+      lambda { client.get_schema(collection_name) }.must_raise RestClient::ResourceNotFound  # 404
+    end
+    
     it "issues DELETE requests to remove a schema"
   end
 end
