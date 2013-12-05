@@ -62,6 +62,10 @@ module RiakJson
       self.transport.send_request("#{self.base_collection_url}/#{collection_name}/#{key}", :get)
     end
     
+    def get_schema(collection_name)
+      self.transport.send_request("#{self.base_collection_url}/#{collection_name}/schema", :get)
+    end
+    
     def insert_json_object(collection_name, key, json)
       self.transport.send_request("#{self.base_collection_url}/#{collection_name}/#{key}", :put, json)
     end

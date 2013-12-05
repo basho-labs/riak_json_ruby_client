@@ -14,7 +14,14 @@ describe "RiakJson Ruby Client" do
   
   context "performs document Schema administration" do
     it "issues PUT requests to create a new schema"
-    it "issues GET requests to read an existing schema from RiakJson/Solr"
+
+    it "issues GET requests to read a schema for an existing collection" do
+      client = test_client
+      collection_name = 'test_collection'
+      response = client.get_schema(collection_name)
+      response.code.must_equal 200
+    end
+
     it "issues DELETE requests to remove a schema"
   end
 end

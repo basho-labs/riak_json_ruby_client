@@ -44,7 +44,7 @@ describe "a RiakJson Collection" do
       lambda { collection.get_raw_json(test_key) }.must_raise RestClient::ResourceNotFound
     end
   end
-
+  
   context "uses a RiakJson client to perform CRUD on RiakJson Documents" do
     it "inserts a new document"
     it "updates an existing document"

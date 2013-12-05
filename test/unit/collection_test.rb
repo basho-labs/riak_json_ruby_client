@@ -28,7 +28,7 @@ describe "a RiakJson Collection" do
     end
   end
   
-  context "uses a RiakJson Client" do
+  context "uses the Client to read and write raw JSON objects to a collection" do
     it "gets a raw JSON object for a collection/key" do
       client = test_client
       collection_name = 'test_collection'
@@ -84,6 +84,18 @@ describe "a RiakJson Collection" do
       collection.delete_raw_json(test_key)
       collection.client.verify
     end
-
+  end
+  
+  context "administers Schemas for collections" do
+    it "gets a schema object for a collection" do
+      client = test_client
+      collection_name = 'test_collection'
+      collection = client.collection(collection_name)
+      
+      collection.client = MiniTest::Mock.new
+      collection.client.expect :get_schema, nil, [collection_name]
+      collection.get_schema
+      collection.client.verify
+    end
   end
 end
