@@ -35,6 +35,10 @@ module RiakJson
       self.client.set_schema_json(self.name, schema_json)
     end
     
+    def update(document)
+      self.update_raw_json(document.key, document.to_json)
+    end
+    
     def update_raw_json(key, json_obj)
       self.client.update_json_object(self.name, key, json_obj)
     end
