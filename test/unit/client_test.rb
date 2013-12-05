@@ -87,4 +87,25 @@ describe "a RiakJson Client" do
     client.delete_json_object(collection_name, test_key)
     client.transport.verify
   end
+  
+  context "performs document Schema administration" do
+    it "inserts a schema json object into a collection's schema api endpoint" do
+      client = test_client
+      collection_name = 'test_collection-new'
+      client.transport = MiniTest::Mock.new
+      schema_json = [{
+        :name => "field_one",
+        :type => "string",
+        :require => true
+        }, {
+        :name => "field_two",
+        :type => "text",
+        :require => false
+        }].to_json
+      
+      client.transport.expect :send_request, nil, ["#{client.base_collection_url}/#{collection_name}/schema", :put, schema_json]
+      client.insert_schema_json(collection_name, schema_json)
+      client.transport.verify
+    end
+  end
 end

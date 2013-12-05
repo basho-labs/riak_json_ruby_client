@@ -70,6 +70,10 @@ module RiakJson
       self.transport.send_request("#{self.base_collection_url}/#{collection_name}/#{key}", :put, json)
     end
     
+    def insert_schema_json(collection_name, json)
+      self.transport.send_request("#{self.base_collection_url}/#{collection_name}/schema", :put, json)
+    end
+    
     def ping
       response = self.transport.get_request("#{self.base_riak_url}/ping")
     end
