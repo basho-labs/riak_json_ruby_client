@@ -70,8 +70,8 @@ describe "a RiakJson Client" do
     test_json = { :key => test_key, :field_one => '123', :field_two => 'abc' }.to_json
     client.transport = MiniTest::Mock.new
     
-    # Test that a client.update_json_object call results in an HTTP POST request to /collection_name/key
-    client.transport.expect :send_request, nil, ["#{client.base_collection_url}/test_collection/document-key-123", :post, test_json]
+    # Test that a client.update_json_object call results in an HTTP PUT request to /collection_name/key
+    client.transport.expect :send_request, nil, ["#{client.base_collection_url}/test_collection/document-key-123", :put, test_json]
     client.update_json_object(collection_name, test_key, test_json)
     client.transport.verify
   end

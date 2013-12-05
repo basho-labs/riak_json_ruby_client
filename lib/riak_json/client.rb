@@ -79,7 +79,7 @@ module RiakJson
     end
 
     def update_json_object(collection_name, key, json)
-      self.transport.send_request("#{self.base_collection_url}/#{collection_name}/#{key}", :post, json)
+      self.transport.send_request("#{self.base_collection_url}/#{collection_name}/#{key}", :put, json)
     end
   end
 end
