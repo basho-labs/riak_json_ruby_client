@@ -104,6 +104,7 @@ describe "a RiakJson Collection" do
       
       results = collection.find({'country'=>'USA'}.to_json)
       results.documents.count.must_equal 3
+      results.documents[0].must_be_kind_of RiakJson::Document
     end
   end
 end

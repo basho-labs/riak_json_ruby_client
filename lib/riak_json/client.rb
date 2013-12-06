@@ -84,6 +84,10 @@ module RiakJson
       self.transport.send_request("#{self.base_collection_url}/#{collection_name}/#{key}", :get)
     end
     
+    def get_query_all(collection_name, query_json)
+      self.transport.send_request("#{self.base_collection_url}/#{collection_name}/query/all", :put, query_json)
+    end
+    
     def get_query_one(collection_name, query_json)
       self.transport.send_request("#{self.base_collection_url}/#{collection_name}/query/one", :put, query_json)
     end

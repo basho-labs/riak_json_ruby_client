@@ -18,11 +18,14 @@
 ##
 ## -------------------------------------------------------------------
 
-require 'riak_json/version'
-require 'riak_json/client'
-require 'riak_json/collection'
-require 'riak_json/document'
-require 'riak_json/query_result'
-
 module RiakJson
+  class QueryResult
+    attr_accessor :documents
+    
+    def initialize(response)
+      result_hash = JSON.parse(response)
+      documents = result_hash.fetch('data', [])
+      @documents = documents.map { | body | RiakJson::Document.new(body['_id'], body) }
+    end
+  end
 end
