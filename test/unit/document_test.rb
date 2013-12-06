@@ -33,4 +33,15 @@ describe "a RiakJson Document" do
       parsed_doc_body['field_one'].must_equal '123'
     end
   end
+  
+  it "implements hash style getters and setters for its body" do
+    test_key = 'key-123'
+    test_body = { :field_one => '123', :field_two => 'abc' }
+    doc = RiakJson::Document.new(test_key, test_body)
+    
+    doc[:field_one].must_equal '123'
+      
+    doc[:field_two] = 'xyz'
+    doc.body[:field_two].must_equal 'xyz'
+  end
 end

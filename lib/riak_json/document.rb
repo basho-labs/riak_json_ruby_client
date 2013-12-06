@@ -8,9 +8,16 @@ module RiakJson
       @body = body
     end
     
+    def [](key)
+      @body[key]
+    end
+    
+    def []=(key, value)
+      @body[key] = value
+    end
+    
     def to_json
       self.body.to_json
     end
-    
   end
 end
