@@ -34,14 +34,14 @@ Since this gem is not released to the public yet, build it locally:
     collection.set_schema(schema)
 
     key = "nyc"
-    body = { :city => "New York", :state => "NY", :country => "USA" }
+    body = { "city" => "New York", "state" => "NY", "country" => "USA" }
     document = RiakJson::Document.new(key, body)
 
     collection.insert(document)
 
-    all_results = collection.find({:country => "USA"}.to_json)  # find all documents that match this field
+    all_results = collection.find({"country" => "USA"}.to_json)  # find all documents that match this field
 
-    one_result = collection.find_one({:city => "New York"}.to_json)  # exact match on 'city' field
+    one_result = collection.find_one({"city" => "New York"}.to_json)  # exact match on "city" field
 
     key_result = collection.find_by_key("nyc")
 

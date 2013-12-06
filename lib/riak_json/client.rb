@@ -30,17 +30,19 @@ module RiakJson
     end
     
     def send_request(url, http_method, data=nil)
-      case http_method
-        when :get
-          response = RestClient.get(url)
-        when :put
-          response = RestClient.put url, data, { :content_type => 'application/json' }
-        when :post
-          response = RestClient.post url, data, { :content_type => 'application/json' }
-        when :delete
-          response = RestClient.delete url
-        else
-          raise ArgumentError, "Invalid HTTP :method - #{http_method}"
+      begin
+        case http_method
+          when :get
+            response = RestClient.get url
+          when :put
+            response = RestClient.put url, data, {:content_type => :json, :accept => :json}
+          when :post
+            response = RestClient.post url, data, {:content_type => :json, :accept => :json}
+          when :delete
+            response = RestClient.delete url
+          else
+            raise ArgumentError, "Invalid HTTP :method - #{http_method}"
+        end
       end
       response
     end
@@ -83,7 +85,7 @@ module RiakJson
     end
     
     def get_query_one(collection_name, query_json)
-      self.transport.send_request("#{self.base_collection_url}/#{collection_name}/query/one", :get, query_json)
+      self.transport.send_request("#{self.base_collection_url}/#{collection_name}/query/one", :put, query_json)
     end
     
     def get_schema(collection_name)

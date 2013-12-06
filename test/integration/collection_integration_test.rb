@@ -72,7 +72,17 @@ describe "a RiakJson Collection" do
   end
   
   context "performs queries" do
-    it "retrieves a single document with find_one()"
+    it "retrieves a single document with find_one()" do
+      client = test_client
+      collection = client.collection('cities')
+      key = "nyc"
+      body = { 'city' => "New York", 'state' => "NY", 'country' => "USA" }
+      doc = RiakJson::Document.new(key, body)
+      collection.insert(doc)
+      
+      result_doc = collection.find_one({"city" => "New York"}.to_json)
+      result_doc.key.must_equal "nyc"
+    end
     it "retrieves many documents with find()"
   end
 end
