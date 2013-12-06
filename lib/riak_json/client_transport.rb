@@ -18,15 +18,31 @@
 ##
 ## -------------------------------------------------------------------
 
-require 'riak_json/client'
-require 'riak_json/client_transport'
-require 'riak_json/collection'
-require 'riak_json/collection_schema'
-require 'riak_json/document'
-require 'riak_json/query_result'
-require 'riak_json/version'
+require 'rest-client'
 
-# RiakJson is a client library for reading and writing
-# documents to the RiakJson document store.
 module RiakJson
+  # Used by RiakJson::Client to make HTTP requests
+  class ClientTransport
+    def get_request(url)
+      self.send_request(url, :get)
+    end
+    
+    def send_request(url, http_method, data=nil)
+      begin
+        case http_method
+          when :get
+            response = RestClient.get url
+          when :put
+            response = RestClient.put url, data, {:content_type => :json, :accept => :json}
+          when :post
+            response = RestClient.post url, data, {:content_type => :json, :accept => :json}
+          when :delete
+            response = RestClient.delete url
+          else
+            raise ArgumentError, "Invalid HTTP :method - #{http_method}"
+        end
+      end
+      response
+    end
+  end
 end
