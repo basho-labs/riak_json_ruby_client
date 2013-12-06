@@ -19,6 +19,7 @@
 ## -------------------------------------------------------------------
 
 module RiakJson
+  # Helper object for creating RiakJson schemas.
   class CollectionSchema
     attr_accessor :fields
     

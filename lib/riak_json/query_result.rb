@@ -19,6 +19,8 @@
 ## -------------------------------------------------------------------
 
 module RiakJson
+  # QueryResult is a helper object that
+  # holds the results of a collection.find_all query
   class QueryResult
     attr_reader :documents
     attr_reader :num_pages

@@ -19,6 +19,8 @@
 ## -------------------------------------------------------------------
 
 module RiakJson
+  # Implements the RiakJson::Collection api (.key, .to_json_document)
+  # to easily store documents in a RiakJson::Collection
   class Document
     attr_accessor :key
     attr_accessor :body

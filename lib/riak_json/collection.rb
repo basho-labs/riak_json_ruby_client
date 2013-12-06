@@ -19,6 +19,8 @@
 ## -------------------------------------------------------------------
 
 module RiakJson
+  # Manages document read and write operations to RiakJson
+  # Also manages collection schema administration.
   class Collection
     attr_accessor :name
     attr_accessor :client
@@ -87,36 +89,5 @@ module RiakJson
     def update_raw_json(key, json_obj)
       self.client.update_json_object(self.name, key, json_obj)
     end
-#
-#    def find(json)
-#      json_res = JSON.parse(self.client.send_request(
-#                                :method => :put,
-#                                :path => "/query/all",
-#                                :data => json
-#                            ))
-#
-#      json_res.map { |json_doc|
-#        RiakJson::Document.new(
-#            :key => json_doc["key"],
-#            :json => json_doc["data"],
-#            :collection => self
-#        )
-#      }
-#    end
-#
-#    def find_one(json)
-#      json_res = JSON.parse(self.client.send_request(
-#                                :method => :put,
-#                                :path => "/query/one",
-#                                :data => json
-#                            ))
-#
-#      RiakJson::Document.new(
-#          :key => json_res["key"],
-#          :json => json_res["data"],
-#          :collection => self
-#      )
-#    end
-
   end
 end

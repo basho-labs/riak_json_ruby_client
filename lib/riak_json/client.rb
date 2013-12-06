@@ -21,9 +21,16 @@
 require 'rest-client'
 
 module RiakJson
+  # Default hostname of the RiakJson test server
   RIAK_TEST_HOST = '127.0.0.1'
+  # Default http port of the RiakJson test server
   RIAK_TEST_PORT = 8098
 
+  # RiakJson::Client makes REST calls to the Riak Json API endpoints,
+  # on behalf of a Collection.
+  # Stores the details of a Riak/RiakJson HTTP connection (host, port),
+  # and manages a cache of collection references.
+  # Uses a pluggable ClientTransport component to make the actual HTTP requests.
   class Client
     attr_accessor :collection_cache
     attr_accessor :transport
