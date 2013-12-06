@@ -27,25 +27,40 @@ Since this gem is not released to the public yet, build it locally:
     #   - text (spaces allowed)
     #   - multi_string (an array of strings)
     #   - integer
-    schema = [{
-        :name => "city",
-        :type => "text",
-        :require => true
-    }, {
-        :name => "state",
-        :type => "string",
-        :require => true
-    }, {
-        :name => "country",
-        :type => "string",
-        :require => true
-    }].to_json
+    schema = RiakJson::CollectionSchema.new
+    schema.add_text_field(name='city', required=true)
+    schema.add_string_field('state', true)
+    schema.add_multi_string_field('zip_codes') # required: false 
+    schema.add_integer_field('population', false)
+    schema.add_string_field('country', true)
 
     # Store the schema
     collection.set_schema(schema)
+    
     # Read a stored schema for a collection
     schema_result = collection.get_schema()
-    
+    #   [{
+    #     :name => "city",
+    #     :type => "text",
+    #      :require => true
+    #    }, {
+    #      :name => "state",
+    #      :type => "string",
+    #      :require => true
+    #    }, {
+    #      :name => "zip_codes",
+    #      :type => "multi_string",
+    #      :require => false
+    #    }, {
+    #      :name => "population",
+    #      :type => "integer",
+    #      :require => false
+    #    }, {
+    #      :name => "country",
+    #      :type => "string",
+    #      :require => true
+    #    }]
+
     # Populate the cities collection with data
     doc = RiakJson::Document.new(
       key="nyc",

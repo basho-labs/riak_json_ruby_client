@@ -18,12 +18,32 @@
 ##
 ## -------------------------------------------------------------------
 
-require 'riak_json/client'
-require 'riak_json/collection'
-require 'riak_json/collection_schema'
-require 'riak_json/document'
-require 'riak_json/query_result'
-require 'riak_json/version'
-
 module RiakJson
+  class CollectionSchema
+    attr_accessor :fields
+    
+    def initialize
+      @fields = []
+    end
+    
+    def add_integer_field(field_name, required=false)
+      self.fields << { name: field_name, type: 'integer', require: required }
+    end
+
+    def add_multi_string_field(field_name, required=false)
+      self.fields << { name: field_name, type: 'multi_string', require: required }
+    end
+
+    def add_string_field(field_name, required=false)
+      self.fields << { name: field_name, type: 'string', require: required }
+    end
+    
+    def add_text_field(field_name, required=false)
+      self.fields << { name: field_name, type: 'text', require: required }
+    end
+    
+    def build
+      self.fields.to_json
+    end
+  end
 end
