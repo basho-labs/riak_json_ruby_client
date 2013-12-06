@@ -150,7 +150,7 @@ describe "a RiakJson Collection" do
       
       response = collection.set_schema(schema)
       response.code.must_equal 204
-  end
+    end
   end
   
   context "performs queries" do

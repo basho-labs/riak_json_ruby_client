@@ -28,8 +28,6 @@ describe "RiakJson Ruby Client" do
       response.must_equal 'OK'
       response.code.must_equal 200
     end
-    
-    it "raises an ArgumentError on send_request with invalid HTTP method"
   end
   
   context "performs document Schema administration" do
@@ -63,7 +61,5 @@ describe "RiakJson Ruby Client" do
       collection_name = 'non-existing-collection'
       lambda { client.get_schema(collection_name) }.must_raise RestClient::ResourceNotFound  # 404
     end
-    
-    it "issues DELETE requests to remove a schema"
   end
 end
