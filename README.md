@@ -17,6 +17,7 @@ Since this gem is not released to the public yet, build it locally:
     client = RiakJson::Client.new('localhost', 8098)
     collection = client.collection("cities")
 
+    # You may set an optional schema (or skip this step and go straight to inserting documents)
     schema = [{
         :name => "city",
         :type => "text",
@@ -33,13 +34,22 @@ Since this gem is not released to the public yet, build it locally:
 
     collection.set_schema(schema)
 
-    key = "nyc"
-    body = { "city" => "New York", "state" => "NY", "country" => "USA" }
-    document = RiakJson::Document.new(key, body)
-
-    collection.insert(document)
+    # Populate the cities collection with data
+    doc = RiakJson::Document.new(
+      key="nyc",
+      body={ 'city'=>"New York", 'state'=>"NY", 'country'=>"USA" })
+    collection.insert(doc)
+    doc = RiakJson::Document.new(
+      key="boston",
+      body={ 'city'=>"Boston", 'state'=>"MA", 'country'=>"USA" })
+    collection.insert(doc)
+    doc = RiakJson::Document.new(
+      key="sf",
+      body={ 'city'=>"San Francisco", 'state'=>"CA", 'country'=>"USA" })
+    collection.insert(doc)
 
     all_results = collection.find({"country" => "USA"}.to_json)  # find all documents that match this field
+    all_results.documents.count  # => 3
 
     one_result = collection.find_one({"city" => "New York"}.to_json)  # exact match on "city" field
 
@@ -48,7 +58,7 @@ Since this gem is not released to the public yet, build it locally:
     schema_result = collection.get_schema()
 ```
 
-## Testing
+## Unit Testing
 This runs both unit tests and integration tests.
 Integration tests assume Riak is listening on ```127.0.0.1:8098```.
 ```
