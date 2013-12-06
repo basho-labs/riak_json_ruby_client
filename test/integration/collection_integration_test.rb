@@ -66,9 +66,45 @@ describe "a RiakJson Collection" do
   end
   
   context "uses a RiakJson client to perform CRUD on RiakJson Documents" do
-    it "inserts a new document"
-    it "updates an existing document"
-    it "reads an existing document"
+    it "inserts a new document" do
+      client = test_client
+      collection_name = 'test_collection'
+      collection = client.collection(collection_name)
+
+      test_key = 'key-123'
+      test_json = { 'field_one' => 'abc' }
+      doc = RiakJson::Document.new(test_key, test_json)
+      response = collection.insert(doc)
+      response.code.must_equal 204
+    end
+    
+    it "updates an existing document" do
+      client = test_client
+      collection_name = 'test_collection'
+      collection = client.collection(collection_name)
+
+      test_key = 'key-123'
+      test_json = { 'field_one' => 'abc' }
+      doc = RiakJson::Document.new(test_key, test_json)
+      response = collection.update(doc)
+      response.code.must_equal 204
+    end
+    
+    it "reads an existing document (loads it by key)" do
+      client = test_client
+      collection_name = 'test_collection'
+      collection = client.collection(collection_name)
+
+      test_key = 'key-123'
+      test_json = { 'field_one' => 'abc' }
+      doc = RiakJson::Document.new(test_key, test_json)
+      response = collection.update(doc)
+      response.code.must_equal 204
+
+      loaded_doc = collection.find_by_key(test_key)
+      loaded_doc.must_be_kind_of RiakJson::Document
+      loaded_doc['field_one'].must_equal 'abc'
+    end
   end
   
   context "can set and read schemas" do
