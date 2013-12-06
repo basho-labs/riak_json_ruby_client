@@ -87,20 +87,24 @@ Since this gem is not released to the public yet, build it locally:
       body={ 'city'=>"San Francisco", 'state'=>"CA", 'country'=>"USA" })
     collection.insert(doc)
 
-    # Load a document by key
+    # Read a document (load by key)
     doc = collection.find_by_key("nyc")
     doc['city']  # => 'New York'
 ```
 
 ### Querying RiakJson - find_one() and find()
+See [RiakJson Query Docs](https://github.com/basho-labs/riak_json/blob/master/docs/query.md) 
+for a complete list of valid query parameters.
 ```ruby
     # Exact match on "city" field
-    doc = collection.find_one({"city" => "San Francisco"}.to_json)
+    query = {"city" => "San Francisco"}.to_json
+    doc = collection.find_one(query)
     # collection.find_one returns a Document instance
     doc['city']  # => 'San Francisco'
 
     # Find all documents that match this field
-    results = collection.find({"country" => "USA"}.to_json)
+    query = {"country" => "USA"}.to_json
+    results = collection.find(query)
     results.documents.count  # => 3
     results.num_pages  # => 1  -- total pages in result set
     results.page  # => 0  -- current page (zero-indexed)
