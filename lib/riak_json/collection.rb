@@ -21,6 +21,13 @@ module RiakJson
       RiakJson::Document.new(key, body_hash)
     end
     
+    def find_one(query_json)
+      json_obj = self.client.get_query_one(self.name, query_json)
+      body_hash = JSON.parse(json_obj)
+      key = body_hash['_id']
+      RiakJson::Document.new(key, body_hash)
+    end
+    
     def get_raw_json(key)
       self.client.get_json_object(self.name, key)
     end

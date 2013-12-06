@@ -194,4 +194,27 @@ describe "a RiakJson Collection" do
       client.verify
     end
   end
+  
+  context "can query to find one or more documents" do
+    it "can query for one document via an exact field match" do
+      client = test_client
+      collection_name = 'test_collection'
+      collection = client.collection(collection_name)
+
+      query_json = {:company_name => 'Basho Technologies'}.to_json
+
+      returned_json = '{"company_name": "Basho Technologies", "_id": "basho"}' # Value mock-loaded from RiakJson
+        
+      client = MiniTest::Mock.new
+      client.expect :get_query_one, returned_json, [collection_name, query_json]
+      collection.client = client
+      
+      document = collection.find_one(query_json)
+      client.verify
+      
+      document.must_be_kind_of RiakJson::Document
+      document.key.must_equal "basho"
+      document.body['company_name'].must_equal 'Basho Technologies'
+    end
+  end
 end
