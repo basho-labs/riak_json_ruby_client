@@ -31,7 +31,7 @@ collection = client.collection("cities")
 # Supported field types:
 #   - string (no spaces, think of a url slug)
 #   - text (spaces allowed)
-#   - multi_string (an array of strings)
+#   - multi_string (an array of strings, no spaces)
 #   - integer
 schema = RiakJson::CollectionSchema.new
 schema.add_text_field(name='city', required=true)
@@ -109,6 +109,20 @@ results.documents.count  # => 3
 results.num_pages  # => 1  -- total pages in result set
 results.page  # => 0  -- current page (zero-indexed)
 results.per_page  # results per page, defaults to 100
+```
+#### Limiting Query Results
+```ruby
+# Find all US cities, limit results to 10 per page
+query = {'country'=>'USA', '$per_page'=>10}.to_json
+results = collection.find(query)
+results.per_page  #  => 10
+```
+#### Page Offsets
+```ruby
+# Find all US cities, retrieve 2nd page (zero-offset)
+query = {'country'=>'USA', '$per_page'=>10, '$page'=>1}.to_json
+results = collection.find(query)
+results.page  #  => 1
 ```
 
 ## Unit Testing
