@@ -39,7 +39,7 @@ Since this gem is not released to the public yet, build it locally:
 
     collection.insert(document)
 
-    all_results = collection.find({:country => "USA"}.to_json)
+    all_results = collection.find({:country => "USA"}.to_json)  # find all documents that match this field
 
     one_result = collection.find_one({:city => "New York"}.to_json)  # exact match on 'city' field
 
