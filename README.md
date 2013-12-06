@@ -15,40 +15,42 @@ Since this gem is not released to the public yet, build it locally:
     require 'riak_json'
 
     client = RiakJson::Client.new('localhost', 8098)
-    collection = client.collection("testing")
+    collection = client.collection("cities")
 
     schema = [{
-        :name => "this",
+        :name => "city",
+        :type => "text",
+        :require => true
+    }, {
+        :name => "state",
         :type => "string",
         :require => true
     }, {
-        :name => "a",
+        :name => "country",
         :type => "string",
-        :require => false
+        :require => true
     }].to_json
 
-    collection.create_schema(schema)
+    collection.set_schema(schema)
 
-    document = RiakJson::Document.new(
-        :key => "my_key",
-        :json => {
-            :this => "is",
-            :a => "test"
-        }.to_json
-    )
+    key = "nyc"
+    body = { :city => "New York", :state => "NY", :country => "USA" }
+    document = RiakJson::Document.new(key, body)
 
     collection.insert(document)
 
-    all_results = collection.find({:this => "is"}.to_json)
+    all_results = collection.find({:country => "USA"}.to_json)
 
-    one_result = collection.find_one({:a => "test"}.to_json)
+    one_result = collection.find_one({:city => "New York"}.to_json)  # exact match on 'city' field
 
-    key_result = collection.find_by_key("my_key")
+    key_result = collection.find_by_key("nyc")
 
     schema_result = collection.get_schema()
 ```
 
 ## Testing
+This runs both unit tests and integration tests.
+Integration tests assume Riak is listening on ```127.0.0.1:8098```.
 ```
 bundle install
 bundle exec rake test
