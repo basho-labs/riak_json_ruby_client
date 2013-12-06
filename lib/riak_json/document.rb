@@ -3,7 +3,7 @@ module RiakJson
     attr_accessor :key
     attr_accessor :body
     
-    def initialize(key=nil, body=nil)
+    def initialize(key=nil, body={})
       @key = key
       @body = body
     end

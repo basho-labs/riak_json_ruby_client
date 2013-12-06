@@ -8,6 +8,12 @@ describe "a RiakJson Document" do
       doc.key.must_equal test_key
     end
     
+    it "if created without a body parameter, initializes it to an empty hash" do
+      doc = RiakJson::Document.new
+      doc.body.must_be_kind_of Hash
+      doc.body.must_be_empty
+    end
+    
     it "has a body" do
       test_key = 'key-123'
       test_body = { :field_one => '123', :field_two => 'abc' }
