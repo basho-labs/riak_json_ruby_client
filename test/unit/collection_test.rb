@@ -126,7 +126,7 @@ describe "a RiakJson Collection" do
       collection = client.collection(collection_name)
 
       test_key = 'key-123'
-      returned_json = '{"field_one": "abc"}' # Value loaded from RiakJson
+      returned_json = '{"field_one": "abc"}' # Value mock-loaded from RiakJson
       
       client = MiniTest::Mock.new
       client.expect :get_json_object, returned_json, [collection_name, test_key]

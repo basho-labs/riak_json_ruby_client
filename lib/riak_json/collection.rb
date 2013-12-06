@@ -52,28 +52,6 @@ module RiakJson
     def update_raw_json(key, json_obj)
       self.client.update_json_object(self.name, key, json_obj)
     end
-    
-    
-#    def insert(document)
-#      self.client.send_request(
-#          :method => :post,
-#          :path => "/collection/#{self.name}/#{document.key}",
-#          :data => document.json
-#      )
-#    end
-#
-#    def find_by_key(key)
-#      json_res = JSON.parse(self.client.send_request(
-#                                :method => :get,
-#                                :path => "/collection/#{self.name}/#{key}"
-#                            ))
-#
-#      RiakJson::Document.new(
-#          :key => key,
-#          :json => json_res,
-#          :collection => self
-#      )
-#    end
 #
 #    def find(json)
 #      json_res = JSON.parse(self.client.send_request(
