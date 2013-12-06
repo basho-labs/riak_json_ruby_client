@@ -15,6 +15,12 @@ module RiakJson
       self.client.delete_json_object(self.name, key)
     end
     
+    def find_by_key(key)
+      json_obj = self.get_raw_json(key)
+      body_hash = JSON.parse(json_obj)
+      RiakJson::Document.new(key, body_hash)
+    end
+    
     def get_raw_json(key)
       self.client.get_json_object(self.name, key)
     end
@@ -46,6 +52,7 @@ module RiakJson
     def update_raw_json(key, json_obj)
       self.client.update_json_object(self.name, key, json_obj)
     end
+    
     
 #    def insert(document)
 #      self.client.send_request(

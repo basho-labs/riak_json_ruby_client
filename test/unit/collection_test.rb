@@ -119,7 +119,25 @@ describe "a RiakJson Collection" do
     end
   end
   
-  context "can read, write and delete Documents" do
+  context "can write and delete Documents, and load them by key" do
+    it "can load a document by its key" do
+      client = test_client
+      collection_name = 'test_collection'
+      collection = client.collection(collection_name)
+
+      test_key = 'key-123'
+      returned_json = '{"field_one": "abc"}' # Value loaded from RiakJson
+      
+      client = MiniTest::Mock.new
+      client.expect :get_json_object, returned_json, [collection_name, test_key]
+      collection.client = client
+      
+      document = collection.find_by_key(test_key)
+      client.verify
+      document.must_be_kind_of RiakJson::Document
+      document.key.must_equal test_key
+    end
+    
     it "can insert a Document" do
       client = test_client
       collection_name = 'test_collection'
