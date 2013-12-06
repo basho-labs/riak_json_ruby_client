@@ -74,7 +74,7 @@ describe "a RiakJson Client" do
     client = test_client
     collection_name = 'test_collection'
     test_key = 'document-key-123'
-    test_json = { :key => test_key, :field_one => '123', :field_two => 'abc' }.to_json
+    test_json = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
     client.transport = MiniTest::Mock.new
     
     # Test that a client.insert_json_object call results in an HTTP PUT request to /collection_name/key
@@ -87,7 +87,7 @@ describe "a RiakJson Client" do
     client = test_client
     collection_name = 'test_collection'
     test_key = 'document-key-123'
-    test_json = { :key => test_key, :field_one => '123', :field_two => 'abc' }.to_json
+    test_json = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
     client.transport = MiniTest::Mock.new
     
     # Test that a client.update_json_object call results in an HTTP PUT request to /collection_name/key

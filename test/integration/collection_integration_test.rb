@@ -27,7 +27,7 @@ describe "a RiakJson Collection" do
       collection_name = 'test_collection'
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-123'
-      json_obj = { :key => test_key, :field_one => '123', :field_two => 'abc' }.to_json
+      json_obj = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
       response = collection.insert_raw_json(test_key, json_obj)
       response.code.must_equal 204
     end
@@ -38,11 +38,11 @@ describe "a RiakJson Collection" do
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-update'
       # Insert an object first
-      json_obj_initial = { :key => test_key, :field_one => '123', :field_two => 'abc' }.to_json
+      json_obj_initial = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
       collection.insert_raw_json(test_key, json_obj_initial)
       
       # Now update the object
-      json_obj_modified = { :key => test_key, :field_one => '345', :field_two => 'efg' }.to_json
+      json_obj_modified = { 'field_one' => '345', 'field_two' => 'efg' }.to_json
       response = collection.update_raw_json(test_key, json_obj_modified)
       response.code.must_equal 204
     end
@@ -53,7 +53,7 @@ describe "a RiakJson Collection" do
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-delete'
       # Insert an object first
-      json_obj = { :key => test_key, :field_one => '123', :field_two => 'abc' }.to_json
+      json_obj = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
       collection.insert_raw_json(test_key, json_obj)
       
       # Now delete that object

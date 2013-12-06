@@ -68,7 +68,7 @@ describe "a RiakJson Collection" do
       collection = client.collection(collection_name)  # create a new collection object
 
       test_key = 'document-key-123'
-      json_obj = { :key => test_key, :field_one => '123', :field_two => 'abc' }.to_json
+      json_obj = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
 
       # Test that a collection.insert_raw_json(doc) results in a call to client.insert_json_object
       collection.client = MiniTest::Mock.new
@@ -83,7 +83,7 @@ describe "a RiakJson Collection" do
       collection = client.collection(collection_name)  # create a new collection object
     
       test_key = 'document-key-123'
-      json_obj = { :key => test_key, :field_one => '123', :field_two => 'abc' }.to_json
+      json_obj = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
     
       # Test that a collection.update_raw_json(doc) results in a call to client.update_json_object
       collection.client = MiniTest::Mock.new
@@ -166,7 +166,7 @@ describe "a RiakJson Collection" do
       # A Collection performs an insert by invoking doc.key and doc.to_json
       # and then sending along the raw json object to its client
       test_key = 'key-123'
-      test_json = { :field_one => 'abc' }
+      test_json = { 'field_one' => 'abc' }
       doc = RiakJson::Document.new(test_key, test_json)
       
       client = MiniTest::Mock.new
@@ -185,7 +185,7 @@ describe "a RiakJson Collection" do
       # A Collection performs an update by invoking doc.key and doc.to_json
       # and then sending along the raw json object to its client
       test_key = 'key-123'
-      test_json = { :field_one => 'abc' }
+      test_json = { 'field_one' => 'abc' }
       doc = RiakJson::Document.new(test_key, test_json)
       
       client = MiniTest::Mock.new

@@ -36,14 +36,14 @@ describe "a RiakJson Document" do
     
     it "has a body" do
       test_key = 'key-123'
-      test_body = { :field_one => '123', :field_two => 'abc' }
+      test_body = { 'field_one' => '123', 'field_two' => 'abc' }
       doc = RiakJson::Document.new(test_key, test_body)
       doc.body.must_equal test_body
     end
     
     it "implements a .to_json method" do
       test_key = 'key-123'
-      test_body = { :field_one => '123', :field_two => 'abc' }
+      test_body = { 'field_one' => '123', 'field_two' => 'abc' }
       doc = RiakJson::Document.new(test_key, test_body)
       doc.to_json.must_be_kind_of String
       json_str = doc.to_json
@@ -56,12 +56,12 @@ describe "a RiakJson Document" do
   
   it "implements hash style getters and setters for its body" do
     test_key = 'key-123'
-    test_body = { :field_one => '123', :field_two => 'abc' }
+    test_body = { 'field_one' => '123', 'field_two' => 'abc' }
     doc = RiakJson::Document.new(test_key, test_body)
     
-    doc[:field_one].must_equal '123'
+    doc['field_one'].must_equal '123'
       
-    doc[:field_two] = 'xyz'
-    doc.body[:field_two].must_equal 'xyz'
+    doc['field_two'] = 'xyz'
+    doc.body['field_two'].must_equal 'xyz'
   end
 end
