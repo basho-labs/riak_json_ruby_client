@@ -108,4 +108,18 @@ describe "a RiakJson Client" do
       client.transport.verify
     end
   end
+  
+  context "sends JSON queries to retrieve documents" do
+    it "sends requests to /query/one" do
+      client = test_client
+      collection_name = 'test_collection'
+      client.transport = MiniTest::Mock.new
+      query_json = {:company_name => 'Basho Technologies'}.to_json
+      
+      client.transport.expect :send_request, nil, ["#{client.base_collection_url}/#{collection_name}/query/one", :get, query_json]
+      client.get_query_one(collection_name, query_json)
+      client.transport.verify
+    end
+    it "sends requests to /query/all"
+  end
 end
