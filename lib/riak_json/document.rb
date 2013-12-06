@@ -36,8 +36,16 @@ module RiakJson
       @body[key] = value
     end
     
+    # Returns a JSON string representation
     def to_json
       self.body.to_json
+    end
+    
+    # Returns a JSON string representation.
+    # Invoked by RiakJson::Collection to serialize
+    # an object for writing to RiakJson
+    def to_json_document
+      self.to_json
     end
   end
 end

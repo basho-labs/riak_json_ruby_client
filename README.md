@@ -6,9 +6,12 @@ A Ruby client for [Riak Json](https://github.com/basho-labs/riak_json/)
 
 Since this gem is not released to the public yet, build it locally:
 
+```bash
     git clone git@github.com:basho/riak_json_ruby_client.git
-    cd riak_json_ruby_client && gem build riak_json
+    cd riak_json_ruby_client
+    gem build riak_json.gemspec
     gem install riak_json-0.0.2.gem
+```
 
 ## Usage
 ```ruby

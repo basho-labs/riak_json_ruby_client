@@ -41,12 +41,12 @@ describe "a RiakJson Document" do
       doc.body.must_equal test_body
     end
     
-    it "implements a .to_json method" do
+    it "implements a .to_json_document method" do
       test_key = 'key-123'
       test_body = { 'field_one' => '123', 'field_two' => 'abc' }
       doc = RiakJson::Document.new(test_key, test_body)
       doc.to_json.must_be_kind_of String
-      json_str = doc.to_json
+      json_str = doc.to_json_document
       
       parsed_doc_body = JSON.parse(json_str)
       # Note - a parsed JSON document has keys as strings, not symbols

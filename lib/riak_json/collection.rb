@@ -62,7 +62,7 @@ module RiakJson
     end
     
     def insert(document)
-      self.insert_raw_json(document.key, document.to_json)
+      self.insert_raw_json(document.key, document.to_json_document)
     end
     
     def insert_raw_json(key, json_obj)
