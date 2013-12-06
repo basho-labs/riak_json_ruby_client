@@ -32,8 +32,11 @@ Since this gem is not released to the public yet, build it locally:
         :require => true
     }].to_json
 
+    # Store the schema
     collection.set_schema(schema)
-
+    # Read a stored schema for a collection
+    schema_result = collection.get_schema()
+    
     # Populate the cities collection with data
     doc = RiakJson::Document.new(
       key="nyc",
@@ -48,14 +51,16 @@ Since this gem is not released to the public yet, build it locally:
       body={ 'city'=>"San Francisco", 'state'=>"CA", 'country'=>"USA" })
     collection.insert(doc)
 
-    all_results = collection.find({"country" => "USA"}.to_json)  # find all documents that match this field
+    # Load a document by key
+    doc = collection.find_by_key("nyc")
+    doc['city']  # => 'New York'
+
+    # Find all documents that match this field
+    all_results = collection.find({"country" => "USA"}.to_json)
     all_results.documents.count  # => 3
 
-    one_result = collection.find_one({"city" => "New York"}.to_json)  # exact match on "city" field
-
-    key_result = collection.find_by_key("nyc")
-
-    schema_result = collection.get_schema()
+    # Exact match on "city" field
+    one_result = collection.find_one({"city" => "New York"}.to_json)
 ```
 
 ## Unit Testing
