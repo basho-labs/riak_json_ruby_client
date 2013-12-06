@@ -71,6 +71,52 @@ describe "a RiakJson Collection" do
     it "reads an existing document"
   end
   
+  context "can set and read schemas" do
+    it "can use a raw JSON object to set schema" do
+      client = test_client
+      collection = client.collection('cities')
+
+      schema = [{
+           :name => "city",
+           :type => "text",
+           :require => true
+          }, {
+            :name => "state",
+            :type => "string",
+            :require => true
+          }, {
+            :name => "zip_codes",
+            :type => "multi_string",
+            :require => false
+          }, {
+            :name => "population",
+            :type => "integer",
+            :require => false
+          }, {
+            :name => "country",
+            :type => "string",
+            :require => true
+          }].to_json
+      response = collection.set_schema(schema)
+      response.code.must_equal 204
+    end
+    
+    it "uses a CollectionSchema object to set schemas" do
+      client = test_client
+      collection = client.collection('cities')
+      
+      schema = RiakJson::CollectionSchema.new
+      schema.add_text_field(name='city', required=true)
+      schema.add_string_field('state', true)
+      schema.add_multi_string_field('zip_codes') # required: false 
+      schema.add_integer_field('population', false)
+      schema.add_string_field('country', true)
+      
+      response = collection.set_schema(schema)
+      response.code.must_equal 204
+  end
+  end
+  
   context "performs queries" do
     it "retrieves a single document with find_one()" do
       client = test_client

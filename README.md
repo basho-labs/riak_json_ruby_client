@@ -42,7 +42,7 @@ Since this gem is not released to the public yet, build it locally:
     #   [{
     #     :name => "city",
     #     :type => "text",
-    #      :require => true
+    #     :require => true
     #    }, {
     #      :name => "state",
     #      :type => "string",

@@ -73,8 +73,11 @@ module RiakJson
       self.delete_raw_json(document.key)
     end
     
-    def set_schema(schema_json)
-      self.client.set_schema_json(self.name, schema_json)
+    def set_schema(schema)
+      if schema.kind_of? RiakJson::CollectionSchema
+        schema = schema.build
+      end
+      self.client.set_schema_json(self.name, schema)
     end
     
     def update(document)
