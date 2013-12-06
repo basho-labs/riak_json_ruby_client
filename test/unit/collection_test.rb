@@ -214,7 +214,7 @@ describe "a RiakJson Collection" do
       
       document.must_be_kind_of RiakJson::Document
       document.key.must_equal "basho"
-      document.body['company_name'].must_equal 'Basho Technologies'
+      document['company_name'].must_equal 'Basho Technologies'
     end
   end
 end
