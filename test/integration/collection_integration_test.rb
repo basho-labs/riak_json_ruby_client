@@ -83,6 +83,27 @@ describe "a RiakJson Collection" do
       result_doc = collection.find_one({"city" => "New York"}.to_json)
       result_doc.key.must_equal "nyc"
     end
-    it "retrieves many documents with find()"
+    
+    it "retrieves many documents with find()" do
+      client = test_client
+      collection = client.collection('cities')
+      
+      # Populate the cities collection with data
+      doc = RiakJson::Document.new(
+        key="nyc",
+        body={ 'city'=>"New York", 'state'=>"NY", 'country'=>"USA" })
+      collection.insert(doc)
+      doc = RiakJson::Document.new(
+        key="boston",
+        body={ 'city'=>"Boston", 'state'=>"MA", 'country'=>"USA" })
+      collection.insert(doc)
+      doc = RiakJson::Document.new(
+        key="sf",
+        body={ 'city'=>"San Francisco", 'state'=>"CA", 'country'=>"USA" })
+      collection.insert(doc)
+      
+      results = collection.find({'country'=>'USA'}.to_json)
+      results.documents.count.must_equal 3
+    end
   end
 end
