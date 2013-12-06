@@ -62,8 +62,10 @@ Since this gem is not released to the public yet, build it locally:
     doc['city']  # => 'New York'
 
     # Find all documents that match this field
-    all_results = collection.find({"country" => "USA"}.to_json)
-    all_results.documents.count  # => 3
+    results = collection.find({"country" => "USA"}.to_json)
+    results.documents.count  # => 3
+    results.num_pages  # => 1  -- total pages in result set
+    results.page  # => 0  -- current page (zero-indexed)
 
     # Exact match on "city" field
     one_result = collection.find_one({"city" => "New York"}.to_json)
