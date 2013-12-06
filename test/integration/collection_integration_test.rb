@@ -103,6 +103,10 @@ describe "a RiakJson Collection" do
       collection.insert(doc)
       
       results = collection.find({'country'=>'USA'}.to_json)
+      results.num_pages.must_equal 1  # Total number of pages in result set
+      results.page.must_equal 0  # Current page, zero-indexed
+      results.total.must_equal 3  # Total number of documents in result set
+      
       results.documents.count.must_equal 3
       results.documents[0].must_be_kind_of RiakJson::Document
     end
