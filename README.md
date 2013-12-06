@@ -17,7 +17,13 @@ Since this gem is not released to the public yet, build it locally:
     client = RiakJson::Client.new('localhost', 8098)
     collection = client.collection("cities")
 
-    # You may set an optional schema (or skip this step and go straight to inserting documents)
+    # You may set an optional schema
+    # (or skip this step and go straight to inserting documents)
+    # Supported field types:
+    #   - string (no spaces, think of a url slug)
+    #   - text (spaces allowed)
+    #   - multi_string (an array of strings)
+    #   - integer
     schema = [{
         :name => "city",
         :type => "text",
