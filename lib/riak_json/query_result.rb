@@ -23,6 +23,7 @@ module RiakJson
     attr_reader :documents
     attr_reader :num_pages
     attr_reader :page
+    attr_reader :per_page
     attr_reader :total
     
     def initialize(response)
@@ -30,6 +31,7 @@ module RiakJson
       @num_pages = result_hash.fetch('num_pages', 0)
       @page = result_hash.fetch('page', 0)
       @total = result_hash.fetch('total', 0)
+      @per_page = result_hash.fetch('per_page', 0)
       
       documents = result_hash.fetch('data', [])
       @documents = documents.map { | body | RiakJson::Document.new(body['_id'], body) }

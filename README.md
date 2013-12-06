@@ -66,6 +66,7 @@ Since this gem is not released to the public yet, build it locally:
     results.documents.count  # => 3
     results.num_pages  # => 1  -- total pages in result set
     results.page  # => 0  -- current page (zero-indexed)
+    results.per_page  # results per page, defaults to 100
 
     # Exact match on "city" field
     one_result = collection.find_one({"city" => "New York"}.to_json)
