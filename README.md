@@ -66,6 +66,9 @@ Since this gem is not released to the public yet, build it locally:
     #      :type => "string",
     #      :require => true
     #    }]
+    
+    # Delete (unset) a schema for a collection
+    collection.delete_schema
 ```
 
 ### Reading and Writing Documents

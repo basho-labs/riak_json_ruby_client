@@ -107,7 +107,7 @@ describe "a RiakJson Collection" do
     end
   end
   
-  context "can set and read schemas" do
+  context "can set, read and delete schemas" do
     it "can use a raw JSON object to set schema" do
       client = test_client
       collection = client.collection('cities')
@@ -151,6 +151,22 @@ describe "a RiakJson Collection" do
       response = collection.set_schema(schema)
       response.code.must_equal 204
     end
+    
+    it "can delete (unset) a schema for a collection" do
+      client = test_client
+      collection = client.collection('cities-delete-schema')
+      
+      # Ensure a collection has an existing schema
+      schema = RiakJson::CollectionSchema.new
+      schema.add_text_field(name='city', required=true)
+      response = collection.set_schema(schema)
+      response.code.must_equal 204
+      
+      # Delete the schema
+      response = collection.delete_schema
+      response.code.must_equal 204
+      
+    end
   end
   
   context "performs queries" do
@@ -160,7 +176,8 @@ describe "a RiakJson Collection" do
       key = "nyc"
       body = { 'city' => "New York", 'state' => "NY", 'country' => "USA" }
       doc = RiakJson::Document.new(key, body)
-      collection.insert(doc)
+      response = collection.insert(doc)
+      response.code.must_equal 204
       
       result_doc = collection.find_one({"city" => "New York"}.to_json)
       result_doc.key.must_equal "nyc"

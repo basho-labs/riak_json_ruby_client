@@ -63,6 +63,10 @@ module RiakJson
       self.transport.send_request("#{self.base_collection_url}/#{collection_name}/#{key}", :delete)
     end
 
+    def delete_schema(collection_name)
+      self.transport.send_request("#{self.base_collection_url}/#{collection_name}/schema", :delete)
+    end
+    
     def get_json_object(collection_name, key)
       self.transport.send_request("#{self.base_collection_url}/#{collection_name}/#{key}", :get)
     end

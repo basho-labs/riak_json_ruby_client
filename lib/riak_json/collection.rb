@@ -37,6 +37,10 @@ module RiakJson
       self.client.delete_json_object(self.name, key)
     end
     
+    def delete_schema
+      self.client.delete_schema(self.name)
+    end
+    
     def find(query_json)
       json_obj = self.client.get_query_all(self.name, query_json)
       RiakJson::QueryResult.new(json_obj)

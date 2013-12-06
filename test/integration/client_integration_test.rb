@@ -31,6 +31,13 @@ describe "RiakJson Ruby Client" do
   end
   
   context "performs document Schema administration" do
+    it "issues GET requests to read a schema for an existing collection" do
+      client = test_client
+      collection_name = 'test_collection'
+      response = client.get_schema(collection_name)
+      response.code.must_equal 200
+    end
+    
     it "issues PUT requests to set a schema object for a collection" do
       client = test_client
       collection_name = 'test_collection'
@@ -45,13 +52,6 @@ describe "RiakJson Ruby Client" do
         }].to_json
       response = client.set_schema_json(collection_name, schema_json)
       response.code.must_equal 204
-    end
-
-    it "issues GET requests to read a schema for an existing collection" do
-      client = test_client
-      collection_name = 'test_collection'
-      response = client.get_schema(collection_name)
-      response.code.must_equal 200
     end
     
     it "receives a 404 Exception when reading a non-existing schema" do
