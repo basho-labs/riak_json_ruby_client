@@ -14,12 +14,18 @@ Since this gem is not released to the public yet, build it locally:
 ```
 
 ## Usage
+
+### Creating / Referencing a Collection
 ```ruby
     require 'riak_json'
 
     client = RiakJson::Client.new('localhost', 8098)
+    # A new or existing collection
     collection = client.collection("cities")
+```
 
+### Schema Administration
+```ruby
     # You may set an optional schema
     # (or skip this step and go straight to inserting documents)
     # Supported field types:
@@ -60,7 +66,10 @@ Since this gem is not released to the public yet, build it locally:
     #      :type => "string",
     #      :require => true
     #    }]
+```
 
+### Reading and Writing Documents
+```ruby
     # Populate the cities collection with data
     doc = RiakJson::Document.new(
       key="nyc",
@@ -78,6 +87,14 @@ Since this gem is not released to the public yet, build it locally:
     # Load a document by key
     doc = collection.find_by_key("nyc")
     doc['city']  # => 'New York'
+```
+
+### Querying RiakJson - find_one() and find()
+```ruby
+    # Exact match on "city" field
+    doc = collection.find_one({"city" => "San Francisco"}.to_json)
+    # collection.find_one returns a Document instance
+    doc['city']  # => 'San Francisco'
 
     # Find all documents that match this field
     results = collection.find({"country" => "USA"}.to_json)
@@ -85,9 +102,6 @@ Since this gem is not released to the public yet, build it locally:
     results.num_pages  # => 1  -- total pages in result set
     results.page  # => 0  -- current page (zero-indexed)
     results.per_page  # results per page, defaults to 100
-
-    # Exact match on "city" field
-    one_result = collection.find_one({"city" => "New York"}.to_json)
 ```
 
 ## Unit Testing
