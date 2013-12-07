@@ -28,8 +28,8 @@ describe "a RiakJson Collection" do
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-123'
       json_obj = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
-      response = collection.insert_raw_json(test_key, json_obj)
-      response.code.must_equal 204
+      key = collection.insert_raw_json(test_key, json_obj)
+      key.must_equal test_key
     end
     
     it "updates a raw json object" do
@@ -43,8 +43,7 @@ describe "a RiakJson Collection" do
       
       # Now update the object
       json_obj_modified = { 'field_one' => '345', 'field_two' => 'efg' }.to_json
-      response = collection.update_raw_json(test_key, json_obj_modified)
-      response.code.must_equal 204
+      collection.update_raw_json(test_key, json_obj_modified)
     end
     
     it "deletes a raw json object" do
@@ -57,8 +56,7 @@ describe "a RiakJson Collection" do
       collection.insert_raw_json(test_key, json_obj)
       
       # Now delete that object
-      response = collection.delete_raw_json(test_key)
-      response.code.must_equal 204
+      collection.delete_raw_json(test_key)
       
       # Issue a get to make sure it now returns a 404 / Resource not found exception
       lambda { collection.get_raw_json(test_key) }.must_raise RestClient::ResourceNotFound
@@ -74,8 +72,8 @@ describe "a RiakJson Collection" do
       test_key = 'key-123'
       test_body = { 'field_one' => 'abc' }
       doc = RiakJson::Document.new(test_key, test_body)
-      response = collection.insert(doc)
-      response.code.must_equal 204
+      key = collection.insert(doc)
+      key.must_equal test_key
     end
     
     it "inserts a new document with no key, receives key from RiakJson" do
@@ -90,6 +88,8 @@ describe "a RiakJson Collection" do
       
       # Insert the document, get key back from db
       generated_key = collection.insert(doc)
+      # The insert() operation should initialize the document's key field
+      doc.key.must_equal generated_key
     end
     
     it "updates an existing document" do
@@ -100,8 +100,7 @@ describe "a RiakJson Collection" do
       test_key = 'key-123'
       test_body = { 'field_one' => 'abc' }
       doc = RiakJson::Document.new(test_key, test_body)
-      response = collection.update(doc)
-      response.code.must_equal 204
+      collection.update(doc)
     end
     
     it "reads an existing document (loads it by key)" do
@@ -190,8 +189,7 @@ describe "a RiakJson Collection" do
       key = "nyc"
       body = { 'city' => "New York", 'state' => "NY", 'country' => "USA" }
       doc = RiakJson::Document.new(key, body)
-      response = collection.insert(doc)
-      response.code.must_equal 204
+      collection.insert(doc)
       
       result_doc = collection.find_one({"city" => "New York"}.to_json)
       result_doc.key.must_equal "nyc"

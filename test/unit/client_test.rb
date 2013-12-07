@@ -96,7 +96,14 @@ describe "a RiakJson Client" do
     client.transport.verify
   end
 
-  it "raises an error if updating a JSON object with no key"
+  it "raises an exception if updating a JSON object with no key" do
+    client = test_client
+    collection_name = 'test_collection'
+    nil_key = nil
+    test_json = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
+    
+    lambda { client.update_json_object(collection_name, nil, test_json) }.must_raise Exception
+  end
   
   it "deletes an existing JSON object in a collection" do
     client = test_client

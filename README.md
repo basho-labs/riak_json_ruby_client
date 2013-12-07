@@ -73,6 +73,14 @@ collection.delete_schema
 
 ### Reading and Writing Documents
 ```ruby
+# You can insert a document with no key
+# RiakJson generates a UUID type key and returns it
+doc = RiakJson::Document.new
+doc.body = { 'city'=>"Cleveland", 'state'=>'OH', 'country'=>'USA'}
+doc.key  # => nil
+collection.insert(doc)
+doc.key  # => e.g. 'EmuVX4kFHxxvlUVJj5TmPGgGPjP'
+
 # Populate the cities collection with data
 doc = RiakJson::Document.new(
   key="nyc",

@@ -108,8 +108,12 @@ module RiakJson
     def post_to_collection(collection_name, json)
       response = self.transport.send_request("#{self.base_collection_url}/#{collection_name}", :post, json)
       if response.code == 201
-        puts response.headers
+        location = response.headers[:location]
+        key = location.split('/').last
+      else
+        raise Exception, "Error inserting document into collection - key not returned"
       end
+      key
     end
     
     def set_schema_json(collection_name, json)
@@ -117,6 +121,9 @@ module RiakJson
     end
 
     def update_json_object(collection_name, key, json)
+      if key.nil? or key.empty?
+        raise Exception, "Error: cannot update document, key missing"
+      end
       self.transport.send_request("#{self.base_collection_url}/#{collection_name}/#{key}", :put, json)
     end
   end
