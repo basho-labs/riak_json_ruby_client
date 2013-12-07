@@ -65,12 +65,12 @@ describe "a RiakJson Client" do
     client.transport = MiniTest::Mock.new
     
     # Test that a client.get_json_object call results in an HTTP GET request to /collection_name/key
-    client.transport.expect :send_request, nil, ["#{client.base_collection_url}/test_collection/document-key-123", :get]
+    client.transport.expect :send_request, nil, ["#{client.base_collection_url}/#{collection_name}/document-key-123", :get]
     client.get_json_object(collection_name, test_key)
     client.transport.verify
   end
   
-  it "writes a new JSON objects to collections" do
+  it "writes a new JSON object to a collection with a specified key" do
     client = test_client
     collection_name = 'test_collection'
     test_key = 'document-key-123'
@@ -78,8 +78,20 @@ describe "a RiakJson Client" do
     client.transport = MiniTest::Mock.new
     
     # Test that a client.insert_json_object call results in an HTTP PUT request to /collection_name/key
-    client.transport.expect :send_request, nil, ["#{client.base_collection_url}/test_collection/document-key-123", :put, test_json]
+    client.transport.expect :send_request, nil, ["#{client.base_collection_url}/#{collection_name}/document-key-123", :put, test_json]
     client.insert_json_object(collection_name, test_key, test_json)
+    client.transport.verify
+  end
+  
+  it "writes a new JSON object to a collection, with no key (gets key from RiakJson)" do
+    client = test_client
+    collection_name = 'test_collection'
+    nil_key = nil
+    test_json = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
+    client.transport = MiniTest::Mock.new
+    
+    client.transport.expect :send_request, nil, ["#{client.base_collection_url}/#{collection_name}/", :post, test_json]
+    client.insert_json_object(collection_name, nil_key, test_json)
     client.transport.verify
   end
   
@@ -91,11 +103,13 @@ describe "a RiakJson Client" do
     client.transport = MiniTest::Mock.new
     
     # Test that a client.update_json_object call results in an HTTP PUT request to /collection_name/key
-    client.transport.expect :send_request, nil, ["#{client.base_collection_url}/test_collection/document-key-123", :put, test_json]
+    client.transport.expect :send_request, nil, ["#{client.base_collection_url}/#{collection_name}/document-key-123", :put, test_json]
     client.update_json_object(collection_name, test_key, test_json)
     client.transport.verify
   end
 
+  it "raises an error if updating a JSON object with no key"
+  
   it "deletes an existing JSON object in a collection" do
     client = test_client
     collection_name = 'test_collection'
@@ -103,7 +117,7 @@ describe "a RiakJson Client" do
     client.transport = MiniTest::Mock.new
     
     # Test that a client.delete_json_object call results in an HTTP DELETE request to /collection_name/key
-    client.transport.expect :send_request, nil, ["#{client.base_collection_url}/test_collection/document-key-123", :delete]
+    client.transport.expect :send_request, nil, ["#{client.base_collection_url}/#{collection_name}/document-key-123", :delete]
     client.delete_json_object(collection_name, test_key)
     client.transport.verify
   end
