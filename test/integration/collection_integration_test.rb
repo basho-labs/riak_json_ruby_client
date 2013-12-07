@@ -22,7 +22,7 @@ require 'helper'
 
 describe "a RiakJson Collection" do
   context "uses a RiakJson client to perform CRUD on raw JSON objects" do
-    it "inserts a raw json object" do
+    it "inserts a raw json object with a key" do
       client = test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)  # create a new collection object
@@ -66,16 +66,30 @@ describe "a RiakJson Collection" do
   end
   
   context "uses a RiakJson client to perform CRUD on RiakJson Documents" do
-    it "inserts a new document" do
+    it "inserts a new document with a key" do
       client = test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)
 
       test_key = 'key-123'
-      test_json = { 'field_one' => 'abc' }
-      doc = RiakJson::Document.new(test_key, test_json)
+      test_body = { 'field_one' => 'abc' }
+      doc = RiakJson::Document.new(test_key, test_body)
       response = collection.insert(doc)
       response.code.must_equal 204
+    end
+    
+    it "inserts a new document with no key, receives key from RiakJson" do
+      client = test_client
+      collection_name = 'test_collection'
+      collection = client.collection(collection_name)
+
+      test_body = { 'field_one' => 'abc' }
+      doc = RiakJson::Document.new
+      doc.body = test_body
+      doc.key.must_be_nil
+      
+      # Insert the document, get key back from db
+      generated_key = collection.insert(doc)
     end
     
     it "updates an existing document" do
@@ -84,8 +98,8 @@ describe "a RiakJson Collection" do
       collection = client.collection(collection_name)
 
       test_key = 'key-123'
-      test_json = { 'field_one' => 'abc' }
-      doc = RiakJson::Document.new(test_key, test_json)
+      test_body = { 'field_one' => 'abc' }
+      doc = RiakJson::Document.new(test_key, test_body)
       response = collection.update(doc)
       response.code.must_equal 204
     end
@@ -95,11 +109,11 @@ describe "a RiakJson Collection" do
       collection_name = 'test_collection'
       collection = client.collection(collection_name)
 
+      # First, insert the document that's to be read
       test_key = 'key-123'
-      test_json = { 'field_one' => 'abc' }
-      doc = RiakJson::Document.new(test_key, test_json)
-      response = collection.update(doc)
-      response.code.must_equal 204
+      test_body = { 'field_one' => 'abc' }
+      doc = RiakJson::Document.new(test_key, test_body)
+      collection.update(doc)
 
       loaded_doc = collection.find_by_key(test_key)
       loaded_doc.must_be_kind_of RiakJson::Document

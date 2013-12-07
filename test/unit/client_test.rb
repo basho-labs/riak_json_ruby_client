@@ -83,18 +83,6 @@ describe "a RiakJson Client" do
     client.transport.verify
   end
   
-  it "writes a new JSON object to a collection, with no key (gets key from RiakJson)" do
-    client = test_client
-    collection_name = 'test_collection'
-    nil_key = nil
-    test_json = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
-    client.transport = MiniTest::Mock.new
-    
-    client.transport.expect :send_request, nil, ["#{client.base_collection_url}/#{collection_name}/", :post, test_json]
-    client.insert_json_object(collection_name, nil_key, test_json)
-    client.transport.verify
-  end
-  
   it "updates an existing JSON object in a collection" do
     client = test_client
     collection_name = 'test_collection'
