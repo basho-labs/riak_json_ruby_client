@@ -18,16 +18,13 @@
 ##
 ## -------------------------------------------------------------------
 
-require 'riak_json/client'
-require 'riak_json/client_transport'
-require 'riak_json/collection'
-require 'riak_json/collection_schema'
-require 'riak_json/document'
-require 'riak_json/query'
-require 'riak_json/query_result'
-require 'riak_json/version'
+require 'helper'
 
-# RiakJson is a client library for reading and writing
-# documents to the RiakJson document store.
-module RiakJson
+describe "a Query" do
+  it "can be created manually, from a json object" do
+    json = {'country' => 'USA'}.to_json
+    query = RiakJson::Query.from_json(json)
+    query.must_be_kind_of RiakJson::Query
+    query.body = json
+  end
 end

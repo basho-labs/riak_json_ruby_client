@@ -18,16 +18,17 @@
 ##
 ## -------------------------------------------------------------------
 
-require 'riak_json/client'
-require 'riak_json/client_transport'
-require 'riak_json/collection'
-require 'riak_json/collection_schema'
-require 'riak_json/document'
-require 'riak_json/query'
-require 'riak_json/query_result'
-require 'riak_json/version'
-
-# RiakJson is a client library for reading and writing
-# documents to the RiakJson document store.
 module RiakJson
+  # Query helper object
+  # Provides a DSL for building json queries to collections
+  class Query
+    attr_accessor :body
+    
+    # Create a Query object instance with a custom-built query
+    def self.from_json(json)
+      query = RiakJson::Query.new
+      query.body = json
+      query
+    end
+  end
 end
