@@ -230,11 +230,28 @@ describe "a RiakJson Collection" do
       collection.client = client
       
       document = collection.find_one(query_json)
-      client.verify
+      collection.client.verify
       
       document.must_be_kind_of RiakJson::Document
       document.key.must_equal "basho"
       document['company_name'].must_equal 'Basho Technologies'
     end
+  end
+  
+  it "returns nil if a query_one() call finds no results" do
+    client = test_client
+    collection_name = 'test_collection'
+    collection = client.collection(collection_name)
+    
+    query_json = {:company_name => 'Basho Technologies'}.to_json
+    empty_results_json = [].to_json  
+    
+    client = MiniTest::Mock.new
+    client.expect :get_query_one, empty_results_json, [collection_name, query_json]
+    collection.client = client
+    
+    doc = collection.find_one(query_json)
+    collection.client.verify
+    doc.must_be_nil
   end
 end

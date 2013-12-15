@@ -43,6 +43,7 @@ module RiakJson
     
     def find(query_json)
       json_obj = self.client.get_query_all(self.name, query_json)
+      return nil if json_obj.nil? or json_obj.empty?
       RiakJson::QueryResult.new(json_obj)
     end
     
@@ -54,7 +55,9 @@ module RiakJson
     
     def find_one(query_json)
       json_obj = self.client.get_query_one(self.name, query_json)
+      return nil if json_obj.nil? or json_obj.empty?
       body_hash = JSON.parse(json_obj)
+      return nil if body_hash.empty?
       key = body_hash['_id']
       RiakJson::Document.new(key, body_hash)
     end
