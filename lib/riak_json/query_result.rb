@@ -29,7 +29,15 @@ module RiakJson
     attr_reader :total
     
     def initialize(response)
-      result_hash = JSON.parse(response)
+      if response.nil? or response.empty?
+        result_hash = {}
+      else
+        result_hash = JSON.parse(response)
+        if result_hash.kind_of? Array and result_hash.empty?
+          result_hash = {}
+        end
+      end
+      
       @num_pages = result_hash.fetch('num_pages', 0)
       @page = result_hash.fetch('page', 0)
       @total = result_hash.fetch('total', 0)

@@ -43,7 +43,7 @@ module RiakJson
     
     def find(query_json)
       json_obj = self.client.get_query_all(self.name, query_json)
-      return nil if json_obj.nil? or json_obj.empty?
+      return [] if json_obj.nil? or json_obj.empty?
       RiakJson::QueryResult.new(json_obj)
     end
     

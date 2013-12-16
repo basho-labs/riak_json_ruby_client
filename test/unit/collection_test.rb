@@ -236,6 +236,22 @@ describe "a RiakJson Collection" do
       document.key.must_equal "basho"
       document['company_name'].must_equal 'Basho Technologies'
     end
+    
+    it "returns an empty QueryResult if a find() call returns no documents" do
+      client = test_client
+      collection_name = 'test_collection'
+      collection = client.collection(collection_name)
+      
+      query = {:company_name => 'nonexistent'}.to_json
+      returned_json = '[]'
+      
+      client = MiniTest::Mock.new
+      client.expect :get_query_all, returned_json, [collection_name, query]
+      collection.client = client
+      
+      document = collection.find(query)
+      collection.client.verify
+    end
   end
   
   it "returns nil if a query_one() call finds no results" do
