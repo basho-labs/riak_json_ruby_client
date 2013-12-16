@@ -248,7 +248,14 @@ describe "a RiakJson Collection" do
       client = MiniTest::Mock.new
       client.expect :get_query_all, returned_json, [collection_name, query]
       collection.client = client
+      document = collection.find(query)
+      collection.client.verify
       
+      # Now verify the same behavior when the json string returned from server is nil
+      returned_json = nil
+      client = MiniTest::Mock.new
+      client.expect :get_query_all, returned_json, [collection_name, query]
+      collection.client = client
       document = collection.find(query)
       collection.client.verify
     end
