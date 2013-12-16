@@ -31,7 +31,7 @@ module RiakJson
       begin
         case http_method
           when :get
-            response = RestClient.get url
+          response = RestClient.get url, {:content_type => :json}
           when :put
             response = RestClient.put url, data, {:content_type => :json, :accept => :json}
           when :post
