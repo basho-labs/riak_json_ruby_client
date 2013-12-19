@@ -24,7 +24,7 @@ describe "a RiakJson Collection" do
   context "when created" do
     it "has a name" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)  # create a new collection object
       collection.name.must_equal collection_name
     end
@@ -42,7 +42,7 @@ describe "a RiakJson Collection" do
     
     it "has a client/connection" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)  # create a new collection object
       collection.client.must_be_kind_of(RiakJson::Client)
     end
@@ -51,7 +51,7 @@ describe "a RiakJson Collection" do
   context "uses the Client to read and write raw JSON objects to a collection" do
     it "gets a raw JSON object for a collection/key" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-123'
 
@@ -64,7 +64,7 @@ describe "a RiakJson Collection" do
     
     it "inserts a raw JSON object into a collection/key" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)  # create a new collection object
 
       test_key = 'document-key-123'
@@ -79,7 +79,7 @@ describe "a RiakJson Collection" do
     
     it "updates a raw JSON object into a collection/key" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)  # create a new collection object
     
       test_key = 'document-key-123'
@@ -94,7 +94,7 @@ describe "a RiakJson Collection" do
     
     it "deletes a raw JSON object for a collection/key" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-123'
     
@@ -109,7 +109,7 @@ describe "a RiakJson Collection" do
   context "administers Schemas for collections" do
     it "sets a schema object for a collection" do
       client = rj_test_client
-      collection_name = 'test_collection-new'
+      collection_name = 'ruby_test_collection-new'
       collection = client.collection(collection_name)
       collection.has_schema?.must_equal false
       schema_json = [{
@@ -130,7 +130,7 @@ describe "a RiakJson Collection" do
     
     it "gets a schema object for a collection" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)
       
       collection.client = MiniTest::Mock.new
@@ -143,7 +143,7 @@ describe "a RiakJson Collection" do
   context "can write and delete Documents, and load them by key" do
     it "can load a document by its key" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)
 
       test_key = 'key-123'
@@ -161,7 +161,7 @@ describe "a RiakJson Collection" do
     
     it "can insert a Document" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)
 
       # A Collection performs an insert by invoking doc.key and doc.to_json
@@ -180,7 +180,7 @@ describe "a RiakJson Collection" do
     
     it "can update a Document" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)
     
       # A Collection performs an update by invoking doc.key and doc.to_json
@@ -199,7 +199,7 @@ describe "a RiakJson Collection" do
     
     it "can remove a Document" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)
     
       # A Collection performs a remove by invoking doc.key
@@ -219,7 +219,7 @@ describe "a RiakJson Collection" do
   context "can query to find one or more documents" do
     it "can query for one document via an exact field match" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)
 
       query_json = {:company_name => 'Basho Technologies'}.to_json
@@ -240,7 +240,7 @@ describe "a RiakJson Collection" do
     
     it "returns an empty QueryResult if a find() call returns no documents" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)
       
       query = {:company_name => 'nonexistent'}.to_json
@@ -264,7 +264,7 @@ describe "a RiakJson Collection" do
   
   it "returns nil if a query_one() call finds no results" do
     client = rj_test_client
-    collection_name = 'test_collection'
+    collection_name = 'ruby_test_collection'
     collection = client.collection(collection_name)
     
     query_json = {:company_name => 'Basho Technologies'}.to_json

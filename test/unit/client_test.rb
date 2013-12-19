@@ -52,14 +52,14 @@ describe "a RiakJson Client" do
   
   it "uses its collection cache when instantiating collections" do
     client = rj_test_client
-    collection1 = client.collection('test_collection')
-    collection2 = client.collection('test_collection')
+    collection1 = client.collection('ruby_test_collection')
+    collection2 = client.collection('ruby_test_collection')
     collection1.must_be_same_as collection2, "Client uses collection cache, collection1 and collection2 should be identical"
   end
   
   it "reads JSON objects from collections" do
     client = rj_test_client
-    collection_name = 'test_collection'
+    collection_name = 'ruby_test_collection'
     test_key = 'document-key-123'
     client.transport = MiniTest::Mock.new
     
@@ -71,7 +71,7 @@ describe "a RiakJson Client" do
   
   it "writes a new JSON object to a collection with a specified key" do
     client = rj_test_client
-    collection_name = 'test_collection'
+    collection_name = 'ruby_test_collection'
     test_key = 'document-key-123'
     test_json = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
     client.transport = MiniTest::Mock.new
@@ -84,7 +84,7 @@ describe "a RiakJson Client" do
   
   it "updates an existing JSON object in a collection" do
     client = rj_test_client
-    collection_name = 'test_collection'
+    collection_name = 'ruby_test_collection'
     test_key = 'document-key-123'
     test_json = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
     client.transport = MiniTest::Mock.new
@@ -97,7 +97,7 @@ describe "a RiakJson Client" do
 
   it "raises an exception if updating a JSON object with no key" do
     client = rj_test_client
-    collection_name = 'test_collection'
+    collection_name = 'ruby_test_collection'
     nil_key = nil
     test_json = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
     
@@ -106,7 +106,7 @@ describe "a RiakJson Client" do
   
   it "deletes an existing JSON object in a collection" do
     client = rj_test_client
-    collection_name = 'test_collection'
+    collection_name = 'ruby_test_collection'
     test_key = 'document-key-123'
     client.transport = MiniTest::Mock.new
     
@@ -119,7 +119,7 @@ describe "a RiakJson Client" do
   context "performs document Schema administration" do
     it "sets a schema json object into a collection's schema api endpoint" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       client.transport = MiniTest::Mock.new
       schema_json = [{
         :name => "field_one",
@@ -140,7 +140,7 @@ describe "a RiakJson Client" do
   context "sends JSON queries to retrieve documents" do
     it "sends requests to /query/one" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       client.transport = MiniTest::Mock.new
       query_json = {:company_name => 'Basho Technologies'}.to_json
       
