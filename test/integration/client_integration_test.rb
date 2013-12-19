@@ -31,13 +31,13 @@ describe "RiakJson Ruby Client" do
   
   context "performs document Schema administration" do
     it "issues GET requests to read a schema for an existing collection" do
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       response = rj_test_client.get_schema(collection_name)
       response.code.must_equal 200
     end
     
     it "issues PUT requests to set a schema object for a collection" do
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       schema_json = [{
         :name => "field_one",
         :type => "string",

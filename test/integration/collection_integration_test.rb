@@ -24,7 +24,7 @@ describe "a RiakJson Collection" do
   context "uses a RiakJson client to perform CRUD on raw JSON objects" do
     it "inserts a raw json object with a key" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-123'
       json_obj = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
@@ -34,7 +34,7 @@ describe "a RiakJson Collection" do
     
     it "updates a raw json object" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-update'
       # Insert an object first
@@ -48,7 +48,7 @@ describe "a RiakJson Collection" do
     
     it "deletes a raw json object" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-delete'
       # Insert an object first
@@ -66,7 +66,7 @@ describe "a RiakJson Collection" do
   context "uses a RiakJson client to perform CRUD on RiakJson Documents" do
     it "inserts a new document with a key" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)
 
       test_key = 'key-123'
@@ -78,7 +78,7 @@ describe "a RiakJson Collection" do
     
     it "inserts a new document with no key, receives key from RiakJson" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)
 
       test_body = { 'field_one' => 'abc' }
@@ -94,7 +94,7 @@ describe "a RiakJson Collection" do
     
     it "updates an existing document" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)
 
       test_key = 'key-123'
@@ -105,7 +105,7 @@ describe "a RiakJson Collection" do
     
     it "reads an existing document (loads it by key)" do
       client = rj_test_client
-      collection_name = 'test_collection'
+      collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)
 
       # First, insert the document that's to be read
