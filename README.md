@@ -68,6 +68,9 @@ schema.add_string_field('country', true)
 # Store the schema
 collection.set_schema(schema)
 
+# Check to see if schema is present
+collection.has_schema?  # => true
+
 # Read a stored schema for a collection
 schema_result = collection.get_schema()
 #   [{
