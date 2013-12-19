@@ -23,7 +23,7 @@ To run both unit and integration tests:
 ```
 bundle exec rake test
 ```
-Note :By default, integration tests assume that Riak is listening on ```127.0.0.1:8098```
+Note: By default, integration tests assume that Riak is listening on ```127.0.0.1:8098```
 (the result of ```make rel```).
 
 To specify alternate host and port, use the ```RIAK_HOST``` and ```RIAK_PORT``` env variables:
