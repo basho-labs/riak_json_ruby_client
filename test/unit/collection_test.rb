@@ -23,25 +23,25 @@ require 'helper'
 describe "a RiakJson Collection" do
   context "when created" do
     it "has a name" do
-      client = test_client
+      client = rj_test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)  # create a new collection object
       collection.name.must_equal collection_name
     end
 
     it "requires a name" do
-      client = test_client  # in helper.rb
+      client = rj_test_client  # in helper.rb
       lambda { client.collection() }.must_raise ArgumentError
     end
 
     it "cannot have an empty or nil name" do
-      client = test_client  # in helper.rb
+      client = rj_test_client  # in helper.rb
       lambda { client.collection(nil) }.must_raise ArgumentError, "A collection cannot have a nil string name"
       lambda { client.collection('') }.must_raise ArgumentError, "A collection cannot have an empty string name"
     end
     
     it "has a client/connection" do
-      client = test_client
+      client = rj_test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)  # create a new collection object
       collection.client.must_be_kind_of(RiakJson::Client)
@@ -50,7 +50,7 @@ describe "a RiakJson Collection" do
   
   context "uses the Client to read and write raw JSON objects to a collection" do
     it "gets a raw JSON object for a collection/key" do
-      client = test_client
+      client = rj_test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-123'
@@ -63,7 +63,7 @@ describe "a RiakJson Collection" do
     end
     
     it "inserts a raw JSON object into a collection/key" do
-      client = test_client
+      client = rj_test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)  # create a new collection object
 
@@ -78,7 +78,7 @@ describe "a RiakJson Collection" do
     end
     
     it "updates a raw JSON object into a collection/key" do
-      client = test_client
+      client = rj_test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)  # create a new collection object
     
@@ -93,7 +93,7 @@ describe "a RiakJson Collection" do
     end
     
     it "deletes a raw JSON object for a collection/key" do
-      client = test_client
+      client = rj_test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-123'
@@ -108,9 +108,10 @@ describe "a RiakJson Collection" do
   
   context "administers Schemas for collections" do
     it "sets a schema object for a collection" do
-      client = test_client
+      client = rj_test_client
       collection_name = 'test_collection-new'
       collection = client.collection(collection_name)
+      collection.has_schema?.must_equal false
       schema_json = [{
         :name => "field_one",
         :type => "string",
@@ -128,7 +129,7 @@ describe "a RiakJson Collection" do
     end
     
     it "gets a schema object for a collection" do
-      client = test_client
+      client = rj_test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)
       
@@ -141,7 +142,7 @@ describe "a RiakJson Collection" do
   
   context "can write and delete Documents, and load them by key" do
     it "can load a document by its key" do
-      client = test_client
+      client = rj_test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)
 
@@ -159,7 +160,7 @@ describe "a RiakJson Collection" do
     end
     
     it "can insert a Document" do
-      client = test_client
+      client = rj_test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)
 
@@ -178,7 +179,7 @@ describe "a RiakJson Collection" do
     end
     
     it "can update a Document" do
-      client = test_client
+      client = rj_test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)
     
@@ -197,7 +198,7 @@ describe "a RiakJson Collection" do
     end
     
     it "can remove a Document" do
-      client = test_client
+      client = rj_test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)
     
@@ -217,7 +218,7 @@ describe "a RiakJson Collection" do
   
   context "can query to find one or more documents" do
     it "can query for one document via an exact field match" do
-      client = test_client
+      client = rj_test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)
 
@@ -238,7 +239,7 @@ describe "a RiakJson Collection" do
     end
     
     it "returns an empty QueryResult if a find() call returns no documents" do
-      client = test_client
+      client = rj_test_client
       collection_name = 'test_collection'
       collection = client.collection(collection_name)
       
@@ -262,7 +263,7 @@ describe "a RiakJson Collection" do
   end
   
   it "returns nil if a query_one() call finds no results" do
-    client = test_client
+    client = rj_test_client
     collection_name = 'test_collection'
     collection = client.collection(collection_name)
     

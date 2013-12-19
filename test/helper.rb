@@ -22,6 +22,10 @@ require 'minitest/autorun'
 require 'minitest-spec-context'
 require 'riak_json'
 
-def test_client
-  RiakJson::Client.new
+class Minitest::Test
+  def rj_test_client
+    host = ENV['RIAK_HOST'] ? ENV['RIAK_HOST'] : RiakJson::RIAK_TEST_HOST
+    port = ENV['RIAK_PORT'] ? ENV['RIAK_PORT'] : RiakJson::RIAK_TEST_PORT
+    @rj_client ||= RiakJson::Client.new(host,port)
+  end
 end
