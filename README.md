@@ -13,6 +13,31 @@ gem build riak_json.gemspec
 gem install riak_json-0.0.2.gem
 ```
 
+
+## Unit Testing
+Use bundler to install dev dependencies:
+```
+bundle install
+```
+To run both unit and integration tests:
+```
+bundle exec rake test
+```
+Note :By default, integration tests assume that Riak is listening on ```127.0.0.1:8098```
+(the result of ```make rel```).
+
+To specify alternate host and port, use the ```RIAK_HOST``` and ```RIAK_PORT``` env variables:
+```
+RIAK_HOST=127.0.0.1 RIAK_PORT=10018 bundle exec rake
+```
+To run just the unit tests:
+```
+bundle exec rake unittest
+```
+To run just the integration tests:
+```
+bundle exec rake itest
+```
 ## Usage
 
 ### Creating / Referencing a Collection
@@ -131,14 +156,6 @@ results.per_page  #  => 10
 query = {'country'=>'USA', '$per_page'=>10, '$page'=>1}.to_json
 results = collection.find(query)
 results.page  #  => 1
-```
-
-## Unit Testing
-This runs both unit tests and integration tests.
-Integration tests assume Riak is listening on ```127.0.0.1:8098```.
-```
-bundle install
-bundle exec rake test
 ```
 
 ## Contributing
