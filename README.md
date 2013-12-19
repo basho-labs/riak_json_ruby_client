@@ -1,9 +1,9 @@
 # Riak Json Ruby Client
 
-A Ruby client for [Riak Json](https://github.com/basho-labs/riak_json/)
+A Ruby client for [Riak Json](https://github.com/basho-labs/riak_json/).
+For ActiveModel integration for RiakJson, see [riak_json-active_model](https://github.com/dmitrizagidulin/rj-activemodel) gem.
 
 ## Installation
-
 Since this gem is not released to the public yet, build it locally:
 
 ```bash
@@ -12,8 +12,6 @@ cd riak_json_ruby_client
 gem build riak_json.gemspec
 gem install riak_json-0.0.2.gem
 ```
-
-
 ## Unit Testing
 Use bundler to install dev dependencies:
 ```
@@ -39,7 +37,6 @@ To run just the integration tests:
 bundle exec rake itest
 ```
 ## Usage
-
 ### Creating / Referencing a Collection
 ```ruby
 require 'riak_json'
