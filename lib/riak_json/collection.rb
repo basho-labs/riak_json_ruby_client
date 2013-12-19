@@ -69,6 +69,10 @@ module RiakJson
       self.client.get_schema(self.name)
     end
     
+    def has_schema?
+      return true if get_schema rescue false
+    end
+    
     def insert(document)
       key = self.insert_raw_json(document.key, document.to_json_document)
       document.key = key
