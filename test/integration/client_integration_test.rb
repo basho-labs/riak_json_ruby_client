@@ -30,27 +30,6 @@ describe "RiakJson Ruby Client" do
   end
   
   context "performs document Schema administration" do
-    it "issues GET requests to read a schema for an existing collection" do
-      collection_name = 'ruby_test_collection'
-      response = rj_test_client.get_schema(collection_name)
-      response.code.must_equal 200
-    end
-    
-    it "issues PUT requests to set a schema object for a collection" do
-      collection_name = 'ruby_test_collection'
-      schema_json = [{
-        :name => "field_one",
-        :type => "string",
-        :require => true
-        }, {
-        :name => "field_two",
-        :type => "text",
-        :require => false
-        }].to_json
-      response = rj_test_client.set_schema_json(collection_name, schema_json)
-      response.code.must_equal 204
-    end
-    
     it "receives a 404 Exception when reading a non-existing schema" do
       # Note: A default schema is auto-created whenever a document is written to a collection
       # For a schema to not exist, no schemas could have been stored for that collection, and no documents inserted
