@@ -92,7 +92,9 @@ schema_result = collection.get_schema()
 #      :require => true
 #    }]
 
-# Delete (unset) a schema for a collection
+# Delete the schema (and the index) for the collection
+# WARNING: This deletes the index for the collection, so previously saved documents
+#          will not show up in queries!
 collection.delete_schema
 ```
 
