@@ -46,6 +46,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "minitest-spec-context"
 
   spec.add_development_dependency "ruby-prof"
-  spec.add_development_dependency "debugger"
+  spec.add_development_dependency "debugger", "1.6.5"
   spec.add_development_dependency "pry"
 end
