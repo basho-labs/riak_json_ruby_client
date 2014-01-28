@@ -21,6 +21,17 @@
 require 'helper'
 
 describe "RiakJson Ruby Client" do
+  it "can load configuration from a file" do
+    test_config_path = 'test/examples/riak.yml'
+    config_hash = RiakJson::Client.load_config_file(test_config_path)
+    assert config_hash.include?('development'), "Sample config file should have a 'development' environment section"
+    dev_config = config_hash['development']
+    dev_config['http_port'].wont_be_nil
+    dev_config['host'].wont_be_nil
+    # The loaded config hash can then be used to set up the client
+    client = RiakJson::Client.new(dev_config['host'], dev_config['http_port'])
+  end
+  
   context "connects to RiakJson" do
     it "can perform an HTTP /ping to the RiakJson cluster" do
       response = rj_test_client.ping

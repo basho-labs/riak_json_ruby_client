@@ -37,6 +37,15 @@ To run just the integration tests:
 bundle exec rake itest
 ```
 ## Usage
+### Loading the Client Config File
+```ruby
+require 'riak_json'
+
+config_file = 'test/examples/riak.yml' # Loads in a config hash, by environment
+dev_config = config_file['development']
+client = RiakJson::Client.new(host=dev_config['host'], dev_config['http_port'])
+```
+
 ### Creating / Referencing a Collection
 ```ruby
 require 'riak_json'

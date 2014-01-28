@@ -19,6 +19,8 @@
 ## -------------------------------------------------------------------
 
 require 'rest-client'
+require 'erb'
+require 'yaml'
 
 module RiakJson
   # Default hostname of the RiakJson test server
@@ -101,6 +103,13 @@ module RiakJson
       end
     end
     
+    # Load a config file in YAML format
+    def self.load_config_file(config_file)
+      config_file = File.expand_path(config_file)
+      config_hash = YAML.load(ERB.new(File.read(config_file)).result)
+    end
+    
+    # Perform an HTTP ping to the Riak cluster
     def ping
       response = self.transport.get_request("#{self.base_riak_url}/ping")
     end
