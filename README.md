@@ -9,8 +9,8 @@ Since this gem is not released to the public yet, build it locally:
 ```bash
 git clone git@github.com:basho/riak_json_ruby_client.git
 cd riak_json_ruby_client
-gem build riak_json.gemspec
-gem install riak_json-0.0.2.gem
+rake build
+gem install pkg/riak_json-0.0.2.gem
 ```
 ## Unit Testing
 Use bundler to install dev dependencies:
@@ -43,7 +43,7 @@ require 'riak_json'
 
 config_file = 'test/examples/riak.yml' # Loads in a config hash, by environment
 dev_config = config_file['development']
-client = RiakJson::Client.new(host=dev_config['host'], dev_config['http_port'])
+client = RiakJson::Client.new(host=dev_config['host'], port=dev_config['http_port'])
 ```
 
 ### Creating / Referencing a Collection
