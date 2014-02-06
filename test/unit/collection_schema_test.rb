@@ -28,6 +28,15 @@ describe "a RiakJson Collection Schema" do
       schema.fields.count.must_equal 0
     end
     
+    it "can add field definitions with type passed in" do
+      schema = RiakJson::CollectionSchema.new
+      schema.add_field(:text, :city, true)
+      schema.fields.count.must_equal 1
+      schema.fields[0][:name].must_equal 'city'
+      schema.fields[0][:type].must_equal 'text'
+      schema.fields[0][:require].must_equal true
+    end
+    
     it "can add a text field to the schema definition" do
       # schema = [{
       #    :name => "city",

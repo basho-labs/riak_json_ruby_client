@@ -27,6 +27,10 @@ module RiakJson
       @fields = []
     end
     
+    def add_field(field_type, field_name, required=false)
+      self.fields << { name: field_name.to_s, type: field_type.to_s, require: required }
+    end
+    
     def add_integer_field(field_name, required=false)
       self.fields << { name: field_name, type: 'integer', require: required }
     end
