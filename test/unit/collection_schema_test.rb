@@ -35,6 +35,8 @@ describe "a RiakJson Collection Schema" do
       schema.fields[0][:name].must_equal 'city'
       schema.fields[0][:type].must_equal 'text'
       schema.fields[0][:require].must_equal true
+      
+      lambda { schema.add_field(:invalid_type, :state) }.must_raise Exception, "Invalid field type"
     end
     
     it "can add a text field to the schema definition" do
