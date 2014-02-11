@@ -196,7 +196,7 @@ describe "a RiakJson Collection" do
       result_doc.key.must_equal "nyc"
     end
     
-    it "retrieves many documents with find()" do
+    it "retrieves many documents with find_all()" do
       client = rj_test_client
       collection = client.collection('cities')
       
@@ -214,7 +214,7 @@ describe "a RiakJson Collection" do
         body={ 'city'=>"San Francisco", 'state'=>"CA", 'country'=>"USA" })
       collection.insert(doc)
       
-      results = collection.find({'country'=>'USA'}.to_json)
+      results = collection.find_all({'country'=>'USA'}.to_json)
       results.num_pages.must_equal 1  # Total number of pages in result set
       results.page.must_equal 0  # Current page, zero-indexed
       results.total.must_equal 3  # Total number of documents in result set

@@ -136,7 +136,7 @@ doc = collection.find_by_key("nyc")
 doc['city']  # => 'New York'
 ```
 
-### Querying RiakJson - find_one() and find()
+### Querying RiakJson - find_one() and find_all()
 See [RiakJson Query Docs](https://github.com/basho-labs/riak_json/blob/master/docs/query.md) 
 for a complete list of valid query parameters.
 ```ruby
@@ -148,7 +148,7 @@ doc['city']  # => 'San Francisco'
 
 # Find all documents that match the "country" field exactly
 query = {"country" => "USA"}.to_json
-results = collection.find(query)
+results = collection.find_all(query)
 results.documents.count  # => 3
 results.num_pages  # => 1  -- total pages in result set
 results.page  # => 0  -- current page (zero-indexed)
@@ -158,14 +158,14 @@ results.per_page  # results per page, defaults to 100
 ```ruby
 # Find all US cities, limit results to 10 per page
 query = {'country'=>'USA', '$per_page'=>10}.to_json
-results = collection.find(query)
+results = collection.find_all(query)
 results.per_page  #  => 10
 ```
 #### Page Offsets
 ```ruby
 # Find all US cities, retrieve 2nd page (zero-offset)
 query = {'country'=>'USA', '$per_page'=>10, '$page'=>1}.to_json
-results = collection.find(query)
+results = collection.find_all(query)
 results.page  #  => 1
 ```
 

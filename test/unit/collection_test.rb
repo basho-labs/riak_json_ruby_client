@@ -238,7 +238,7 @@ describe "a RiakJson Collection" do
       document['company_name'].must_equal 'Basho Technologies'
     end
     
-    it "returns an empty QueryResult if a find() call returns no documents" do
+    it "returns an empty QueryResult if a find_all() call returns no documents" do
       client = rj_test_client
       collection_name = 'ruby_test_collection'
       collection = client.collection(collection_name)
@@ -249,7 +249,7 @@ describe "a RiakJson Collection" do
       client = MiniTest::Mock.new
       client.expect :get_query_all, returned_json, [collection_name, query]
       collection.client = client
-      document = collection.find(query)
+      document = collection.find_all(query)
       collection.client.verify
       
       # Now verify the same behavior when the json string returned from server is nil
@@ -257,7 +257,7 @@ describe "a RiakJson Collection" do
       client = MiniTest::Mock.new
       client.expect :get_query_all, returned_json, [collection_name, query]
       collection.client = client
-      document = collection.find(query)
+      document = collection.find_all(query)
       collection.client.verify
     end
   end
