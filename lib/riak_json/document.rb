@@ -24,6 +24,7 @@ module RiakJson
   class Document
     attr_accessor :key
     attr_accessor :body
+    alias_method :attributes, :body
     
     def initialize(key=nil, body={})
       @key = key
