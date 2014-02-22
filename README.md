@@ -64,12 +64,14 @@ collection = client.collection("cities")
 #   - text (spaces allowed)
 #   - multi_string (an array of strings, no spaces)
 #   - integer
+#   - geo (Solr 'location'/LatLonType type field)
 schema = RiakJson::CollectionSchema.new
 schema.add_text_field(name='city', required=true)
 schema.add_string_field('state', true)
 schema.add_multi_string_field('zip_codes') # required: false 
 schema.add_integer_field('population', false)
 schema.add_string_field('country', true)
+schema.add_geo_field('coordinates')
 
 # Store the schema
 collection.set_schema(schema)
@@ -94,6 +96,10 @@ schema_result = collection.get_schema()
 #    }, {
 #      :name => "population",
 #      :type => "integer",
+#      :require => false
+#    }, {
+#      :name => "coordinates",
+#      :type => "geo",
 #      :require => false
 #    }, {
 #      :name => "country",

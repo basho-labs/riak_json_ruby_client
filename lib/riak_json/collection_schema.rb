@@ -34,6 +34,10 @@ module RiakJson
       self.fields << { name: field_name.to_s, type: field_type.to_s, require: required }
     end
     
+    def add_geo_field(field_name, required=false)
+      self.add_field(:geo, field_name, required)
+    end
+    
     def add_integer_field(field_name, required=false)
       self.add_field(:integer, field_name, required)
     end
@@ -55,7 +59,7 @@ module RiakJson
     end
     
     def self.valid_field_types
-      [:text, :string, :multi_string, :integer]
+      [:text, :string, :multi_string, :integer, :geo]
     end
   end
 end

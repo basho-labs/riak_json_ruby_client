@@ -80,7 +80,7 @@ describe "a RiakJson Collection Schema" do
       schema.fields[0][:type].must_equal 'multi_string'
       schema.fields[0][:require].must_equal true
     end
-
+    
     it "can add an integer field to the schema definition" do
       # schema = [{
       #    :name => "population",
@@ -92,6 +92,20 @@ describe "a RiakJson Collection Schema" do
       schema.fields.count.must_equal 1
       schema.fields[0][:name].must_equal 'population'
       schema.fields[0][:type].must_equal 'integer'
+      schema.fields[0][:require].must_equal false
+    end
+    
+    it "can add a geo type field to the schema definition" do
+      # schema = [{
+      #    :name => "coordinates",
+      #    :type => "geo",
+      #    :require => false
+      # }]
+      schema = RiakJson::CollectionSchema.new
+      schema.add_geo_field(name='coordinates', required=false)
+      schema.fields.count.must_equal 1
+      schema.fields[0][:name].must_equal 'coordinates'
+      schema.fields[0][:type].must_equal 'geo'
       schema.fields[0][:require].must_equal false
     end
     
