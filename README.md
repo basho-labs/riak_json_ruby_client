@@ -5,6 +5,8 @@ For ActiveModel and Rails integration for RiakJson, see the [riagent](https://gi
 
 For a sample Rails 4 application using RiakJson, see [Riak Threaded Forum](https://github.com/dmitrizagidulin/riak-threaded-forum)
 
+See also [RELEASE_NOTES.md](https://github.com/basho-labs/riak_json_ruby_client/blob/master/RELEASE_NOTES.md) for a version/feature log.
+
 ## Installation
 To install from Ruby Gems:
 ```
