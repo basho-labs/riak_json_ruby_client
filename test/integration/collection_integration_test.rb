@@ -168,13 +168,8 @@ describe "a RiakJson Collection" do
     
     it "can delete (unset) a schema for a collection" do
       client = rj_test_client
+      # schema created via 'rake db:seed' (See test/seeds/seed.rb)
       collection = client.collection('cities-delete-schema')
-      
-      # Ensure a collection has an existing schema
-      schema = RiakJson::CollectionSchema.new
-      schema.add_text_field(name='city', required=true)
-      response = collection.set_schema(schema)
-      response.code.must_equal 204
       
       # Delete the schema
       response = collection.delete_schema

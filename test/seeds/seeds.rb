@@ -18,30 +18,15 @@
 ##
 ## -------------------------------------------------------------------
 
-require "bundler/gem_tasks"
-require 'rake'
-require 'rake/testtask'
+require 'riak_json'
 
-task :default => :test
+# Create a client pointed to test instance
+host = ENV['RIAK_HOST'] ? ENV['RIAK_HOST'] : RiakJson::RIAK_TEST_HOST
+port = ENV['RIAK_PORT'] ? ENV['RIAK_PORT'] : RiakJson::RIAK_TEST_PORT
+client = RiakJson::Client.new(host, port)
 
-Rake::TestTask.new :test do |t|
-  t.libs << 'lib' << 'test'
-  t.pattern = 'test/**/*_test.rb'
-end
-
-Rake::TestTask.new :itest do |t|
-  t.libs << 'lib' << 'test'
-  t.pattern = 'test/integration/*_test.rb'
-end
-
-Rake::TestTask.new :unittest do |t|
-  t.libs << 'lib' << 'test'
-  t.pattern = 'test/unit/*_test.rb'
-end
-
-namespace :db do
-  task :seed do
-    seed_file = File.join('test', 'seeds', 'seeds.rb')
-    load(seed_file) if File.exist?(seed_file)
-  end
-end
+# Ensure a collection has an existing schema for the Delete Schema test
+collection = client.collection('cities-delete-schema')
+schema = RiakJson::CollectionSchema.new
+schema.add_text_field(name='city', required=true)
+collection.set_schema(schema)

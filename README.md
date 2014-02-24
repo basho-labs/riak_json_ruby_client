@@ -1,11 +1,17 @@
 # Riak Json Ruby Client
 
 A Ruby client for [Riak Json](https://github.com/basho-labs/riak_json/).
-For ActiveModel integration for RiakJson, see [riak_json-active_model](https://github.com/dmitrizagidulin/rj-activemodel) gem.
+For ActiveModel and Rails integration for RiakJson, see the [riagent](https://github.com/dmitrizagidulin/riagent) gem.
+
+For a sample Rails 4 application using RiakJson, see [Riak Threaded Forum](https://github.com/dmitrizagidulin/riak-threaded-forum)
 
 ## Installation
-Since this gem is not released to the public yet, build it locally:
+To install from Ruby Gems:
+```
+gem install riak_json
+```
 
+To build locally, from source:
 ```bash
 git clone git@github.com:basho/riak_json_ruby_client.git
 cd riak_json_ruby_client
@@ -17,25 +23,36 @@ Use bundler to install dev dependencies:
 ```
 bundle install
 ```
-To run both unit and integration tests:
-```
-bundle exec rake test
-```
-Note: By default, integration tests assume that Riak is listening on ```127.0.0.1:8098```
-(the result of ```make rel```).
 
-To specify alternate host and port, use the ```RIAK_HOST``` and ```RIAK_PORT``` env variables:
-```
-RIAK_HOST=127.0.0.1 RIAK_PORT=10018 bundle exec rake
-```
-To run just the unit tests:
+To run just the unit tests (no db connection necessary):
 ```
 bundle exec rake unittest
 ```
+
+To run both unit and integration tests:
+
+1. Make sure Riak with RiakJson is up and running. Note: By default, integration tests assume that Riak 
+    is listening on ```127.0.0.1:8098``` (the result of ```make rel```).
+    To specify alternate host and port, use the ```RIAK_HOST``` and ```RIAK_PORT``` env variables:
+    ```
+    RIAK_HOST=127.0.0.1 RIAK_PORT=10018 bundle exec rake
+    ```
+    
+2. Seed the db (required for several of the integration tests)
+    ```
+    rake db:seed
+    ```
+    
+3. Run the tests:
+    ```
+    bundle exec rake test
+    ```
+
 To run just the integration tests:
 ```
 bundle exec rake itest
 ```
+
 ## Usage
 ### Loading the Client Config File
 ```ruby
@@ -111,6 +128,15 @@ schema_result = collection.get_schema()
 # WARNING: This deletes the index for the collection, so previously saved documents
 #          will not show up in queries!
 collection.delete_schema
+```
+
+### List All RiakJson Collections
+This returns an array of ```RiakJson::Collection``` instances. 
+Unlike the Riak 'List Buckets' call, this does not iterate through all of the keys, but gets the
+custom RJ collection types from the ring metadata.
+
+```ruby
+client.collections()
 ```
 
 ### Reading and Writing Documents

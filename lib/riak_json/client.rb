@@ -61,6 +61,22 @@ module RiakJson
       self.collection_cache[name] ||= RiakJson::Collection.new(name, self)
     end
 
+    # List all of the RiakJson collections on the riak cluster
+    # This is different from a Riak 'list buckets' command. 
+    # Instead of iterating over all the keys on the cluster, 'list collections'
+    # only lists the custom RJ bucket types on the cluster (from the ring metadata)
+    # Raw JSON that's returned by RJ:
+    # 
+    # <code>{"collections":[{"name":"collection1"},{"name":"collection2"}]}</code>
+    # 
+    # This is then mapped to a list of RiakJsonCollection instances.
+    # @return [Array] List of +RiakJson::Collection+ instances that exist in the cluster.
+    def collections
+      result = self.transport.send_request("#{self.base_collection_url}", :get)
+      collection_list = JSON.parse(result)['collections']
+      collection_list.map { |ea| self.collection(ea['name'])}
+    end
+    
     def delete_json_object(collection_name, key)
       self.transport.send_request("#{self.base_collection_url}/#{collection_name}/#{key}", :delete)
     end

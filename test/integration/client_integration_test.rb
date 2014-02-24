@@ -48,4 +48,10 @@ describe "RiakJson Ruby Client" do
       lambda { rj_test_client.get_schema(collection_name) }.must_raise RestClient::ResourceNotFound  # 404
     end
   end
+  
+  it "can list all collections in the cluster" do
+    result = rj_test_client.collections()
+    result.wont_be_empty
+    result.first.must_be_kind_of RiakJson::Collection
+  end
 end
