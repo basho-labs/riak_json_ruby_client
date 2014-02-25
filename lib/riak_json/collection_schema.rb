@@ -34,8 +34,16 @@ module RiakJson
       self.fields << { name: field_name.to_s, type: field_type.to_s, require: required }
     end
     
-    def add_geo_field(field_name, required=false)
-      self.add_field(:geo, field_name, required)
+    # Add a 'location' type field (Solr class solr.LatLonType) to the schema
+    # See https://wiki.apache.org/solr/SpatialSearch
+    def add_location_field(field_name, required=false)
+      self.add_field(:location, field_name, required)
+    end
+    
+    # Add a 'location_rpt' type field (Solr class solr.SpatialRecursivePrefixTreeFieldType) to the schema
+    # See https://wiki.apache.org/solr/SolrAdaptersForLuceneSpatial4
+    def add_location_rpt_field(field_name, required=false)
+      self.add_field(:location_rpt, field_name, required)
     end
     
     def add_integer_field(field_name, required=false)
@@ -59,7 +67,7 @@ module RiakJson
     end
     
     def self.valid_field_types
-      [:text, :string, :multi_string, :integer, :geo]
+      [:text, :string, :multi_string, :integer, :location, :location_rpt]
     end
   end
 end

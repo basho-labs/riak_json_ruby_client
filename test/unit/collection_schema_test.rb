@@ -95,17 +95,31 @@ describe "a RiakJson Collection Schema" do
       schema.fields[0][:require].must_equal false
     end
     
-    it "can add a geo type field to the schema definition" do
+    it "can add a location type field to the schema definition" do
       # schema = [{
       #    :name => "coordinates",
-      #    :type => "geo",
+      #    :type => "location",
       #    :require => false
       # }]
       schema = RiakJson::CollectionSchema.new
-      schema.add_geo_field(name='coordinates', required=false)
+      schema.add_location_field(name='coordinates', required=false)
       schema.fields.count.must_equal 1
       schema.fields[0][:name].must_equal 'coordinates'
-      schema.fields[0][:type].must_equal 'geo'
+      schema.fields[0][:type].must_equal 'location'
+      schema.fields[0][:require].must_equal false
+    end
+    
+    it "can add a location_rpt type field to the schema definition" do
+      # schema = [{
+      #    :name => "coordinates_rpt",
+      #    :type => "location_rpt",
+      #    :require => false
+      # }]
+      schema = RiakJson::CollectionSchema.new
+      schema.add_location_rpt_field(name='coordinates_rpt', required=false)
+      schema.fields.count.must_equal 1
+      schema.fields[0][:name].must_equal 'coordinates_rpt'
+      schema.fields[0][:type].must_equal 'location_rpt'
       schema.fields[0][:require].must_equal false
     end
     

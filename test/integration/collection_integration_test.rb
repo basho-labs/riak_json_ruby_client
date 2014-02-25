@@ -161,6 +161,8 @@ describe "a RiakJson Collection" do
       schema.add_multi_string_field('zip_codes') # required: false 
       schema.add_integer_field('population', false)
       schema.add_string_field('country', true)
+      schema.add_location_field('capital_coordinates', false)
+      schema.add_location_rpt_field('capital_coordinates_rpt', false)
       
       response = collection.set_schema(schema)
       response.code.must_equal 204
