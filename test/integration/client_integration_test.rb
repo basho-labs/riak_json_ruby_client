@@ -50,6 +50,7 @@ describe "RiakJson Ruby Client" do
   end
   
   it "can list all collections in the cluster" do
+    # these should be populated by 'rake db:seed'
     result = rj_test_client.collections()
     result.wont_be_empty
     result.first.must_be_kind_of RiakJson::Collection

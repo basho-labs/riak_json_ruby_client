@@ -24,7 +24,7 @@ describe "a RiakJson Collection" do
   context "uses a RiakJson client to perform CRUD on raw JSON objects" do
     it "inserts a raw json object with a key" do
       client = rj_test_client
-      collection_name = 'ruby_test_collection'
+      collection_name = '_rj-rb-client-test_collection'
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-123'
       json_obj = { 'field_one' => '123', 'field_two' => 'abc' }.to_json
@@ -34,7 +34,7 @@ describe "a RiakJson Collection" do
     
     it "updates a raw json object" do
       client = rj_test_client
-      collection_name = 'ruby_test_collection'
+      collection_name = '_rj-rb-client-test_collection'
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-update'
       # Insert an object first
@@ -48,7 +48,7 @@ describe "a RiakJson Collection" do
     
     it "deletes a raw json object" do
       client = rj_test_client
-      collection_name = 'ruby_test_collection'
+      collection_name = '_rj-rb-client-test_collection'
       collection = client.collection(collection_name)  # create a new collection object
       test_key = 'document-key-delete'
       # Insert an object first
@@ -66,7 +66,7 @@ describe "a RiakJson Collection" do
   context "uses a RiakJson client to perform CRUD on RiakJson Documents" do
     it "inserts a new document with a key" do
       client = rj_test_client
-      collection_name = 'ruby_test_collection'
+      collection_name = '_rj-rb-client-test_collection'
       collection = client.collection(collection_name)
 
       test_key = 'key-123'
@@ -78,7 +78,7 @@ describe "a RiakJson Collection" do
     
     it "inserts a new document with no key, receives key from RiakJson" do
       client = rj_test_client
-      collection_name = 'ruby_test_collection'
+      collection_name = '_rj-rb-client-test_collection'
       collection = client.collection(collection_name)
 
       test_body = { 'field_one' => 'abc' }
@@ -94,7 +94,7 @@ describe "a RiakJson Collection" do
     
     it "updates an existing document" do
       client = rj_test_client
-      collection_name = 'ruby_test_collection'
+      collection_name = '_rj-rb-client-test_collection'
       collection = client.collection(collection_name)
 
       test_key = 'key-123'
@@ -105,7 +105,7 @@ describe "a RiakJson Collection" do
     
     it "reads an existing document (loads it by key)" do
       client = rj_test_client
-      collection_name = 'ruby_test_collection'
+      collection_name = '_rj-rb-client-test_collection'
       collection = client.collection(collection_name)
 
       # First, insert the document that's to be read
@@ -123,7 +123,7 @@ describe "a RiakJson Collection" do
   context "can set, read and delete schemas" do
     it "can use a raw JSON object to set schema" do
       client = rj_test_client
-      collection = client.collection('cities')
+      collection = client.collection('_rj-rb-client-cities')
 
       schema = [{
            :name => "city",
@@ -153,7 +153,7 @@ describe "a RiakJson Collection" do
     
     it "uses a CollectionSchema object to set schemas" do
       client = rj_test_client
-      collection = client.collection('cities')
+      collection = client.collection('_rj-rb-client-cities')
       
       schema = RiakJson::CollectionSchema.new
       schema.add_text_field(name='city', required=true)
@@ -171,7 +171,7 @@ describe "a RiakJson Collection" do
     it "can delete (unset) a schema for a collection" do
       client = rj_test_client
       # schema created via 'rake db:seed' (See test/seeds/seed.rb)
-      collection = client.collection('cities-delete-schema')
+      collection = client.collection('_rj-rb-client-cities-delete-schema')
       
       # Delete the schema
       response = collection.delete_schema
@@ -183,7 +183,7 @@ describe "a RiakJson Collection" do
   context "performs queries" do
     it "retrieves a single document with find_one()" do
       client = rj_test_client
-      collection = client.collection('cities')
+      collection = client.collection('_rj-rb-client-cities')
       key = "nyc"
       body = { 'city' => "New York", 'state' => "NY", 'country' => "USA" }
       doc = RiakJson::Document.new(key, body)
@@ -195,7 +195,7 @@ describe "a RiakJson Collection" do
     
     it "retrieves many documents with find_all()" do
       client = rj_test_client
-      collection = client.collection('cities')
+      collection = client.collection('_rj-rb-client-cities')
       
       # Populate the cities collection with data
       doc = RiakJson::Document.new(
