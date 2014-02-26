@@ -33,6 +33,16 @@ module RiakJson
       @client = client
     end
     
+    # Return all documents in the collection, paginated
+    # @param [Integer] results_limit Per-page results limit (defaults to 100)
+    def all(results_limit=100)
+      query = {
+        "*" => "*",
+        '$per_page' => results_limit
+      }.to_json
+      self.find_all(query)
+    end
+    
     def delete_raw_json(key)
       self.client.delete_json_object(self.name, key)
     end

@@ -24,8 +24,7 @@ describe "RiakJson provides geospatial Solr search" do
   it "ensure seeding of us capitals worked" do
     client = rj_test_client
     collection = client.collection('_rj-rb-client-us-capitals')
-    query = {"*" => "*"}.to_json
-    results = collection.find_all(query)
+    results = collection.all()
     results.wont_be_empty
   end
 end

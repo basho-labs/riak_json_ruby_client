@@ -168,6 +168,9 @@ collection.insert(doc)
 # Read a document (load by key)
 doc = collection.find_by_key("nyc")
 doc['city']  # => 'New York'
+
+# Retrieve all documents for a collection (paginated)
+collection.all(docs_per_page=100)
 ```
 
 ### Querying RiakJson - find_one() and find_all()

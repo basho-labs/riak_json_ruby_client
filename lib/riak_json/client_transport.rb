@@ -41,8 +41,8 @@ module RiakJson
           else
             raise ArgumentError, "Invalid HTTP :method - #{http_method}"
         end
-      rescue Exception => e
-        puts e.inspect
+#      rescue Exception => e
+#        puts e.inspect
       end
       response
     end

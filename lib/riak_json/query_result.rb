@@ -46,5 +46,11 @@ module RiakJson
       documents = result_hash.fetch('data', [])
       @documents = documents.map { | body | RiakJson::Document.new(body['_id'], body) }
     end
+    
+    # Return true if no results came back for a query
+    # @return [Boolean]
+    def empty?
+      self.total == 0
+    end
   end
 end
