@@ -106,6 +106,14 @@ module RiakJson
       self.client.set_schema_json(self.name, schema)
     end
     
+    # Perform an arbitrary raw Solr query to the collection's index
+    # See https://wiki.apache.org/solr/SpatialSearch
+    # @param [String] query_params Arbitrary query parameters that will be passed to /solr/collectionRJIndex?... endpoint
+    # @return [String] JSON result from the query
+    def solr_query_raw(query_params)
+      self.client.solr_query_raw(self.name, query_params)
+    end
+    
     def update(document)
       self.update_raw_json(document.key, document.to_json)
     end

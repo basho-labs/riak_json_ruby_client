@@ -83,14 +83,15 @@ collection = client.collection("cities")
 #   - text (spaces allowed)
 #   - multi_string (an array of strings, no spaces)
 #   - integer
-#   - geo (Solr 'location'/LatLonType type field)
+#   - location (Solr 'location'/LatLonType type field)
+#   - location_rpt (Solr 'location_rpt'/SpatialRecursivePrefixTreeFieldType type field)
 schema = RiakJson::CollectionSchema.new
 schema.add_text_field(name='city', required=true)
 schema.add_string_field('state', true)
 schema.add_multi_string_field('zip_codes') # required: false 
 schema.add_integer_field('population', false)
 schema.add_string_field('country', true)
-schema.add_geo_field('coordinates')
+schema.add_location_rpt_field('coordinates_rpt')
 
 # Store the schema
 collection.set_schema(schema)
@@ -117,8 +118,8 @@ schema_result = collection.get_schema()
 #      :type => "integer",
 #      :require => false
 #    }, {
-#      :name => "coordinates",
-#      :type => "geo",
+#      :name => "coordinates_rpt",
+#      :type => "location_rpt",
 #      :require => false
 #    }, {
 #      :name => "country",
