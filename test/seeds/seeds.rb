@@ -26,12 +26,14 @@ port = ENV['RIAK_PORT'] ? ENV['RIAK_PORT'] : RiakJson::RIAK_TEST_PORT
 client = RiakJson::Client.new(host, port)
 
 # Ensure a collection has an existing schema for the Delete Schema test
+puts "Creating Solr schema for the '_rj-rb-client-cities-delete-schema' collection."
 collection = client.collection('_rj-rb-client-cities-delete-schema')
 schema = RiakJson::CollectionSchema.new
 schema.add_text_field(name='city', required=true)
 collection.set_schema(schema)
 
 # Set up the US States/Capitals collection, to test the geo search functionality
+puts "Creating Solr schema for the '_rj-rb-client-us-capitals' collection."
 schema = RiakJson::CollectionSchema.new
 schema.add_string_field('abbreviation', required=true)
 schema.add_text_field('name', true)
@@ -41,16 +43,18 @@ schema.add_location_rpt_field('capital_coords_rpt')
 capitals = client.collection('_rj-rb-client-us-capitals')
 capitals.set_schema(schema)
 
+puts "Loading 'test/seeds/us_capitals.json'."
 us_capitals_json = File.open('test/seeds/us_capitals.json', 'rb') { |file| file.read }
 us_capitals = JSON.parse(us_capitals_json)
-
+puts "Seeding state data."
 us_capitals.each do | abbrev, state_data |
   state_json = {
     :abbreviation => abbrev,
     :name => state_data['name'],
     :capital => state_data['capital'],
-    :capital_coords_rpt => "#{state_data['lat']},#{state_data['lon']}"
+    :capital_coords_rpt => "#{state_data['lat']},#{state_data['long']}"
   }
   state_doc = RiakJson::Document.new(abbrev, state_json)
+  puts "  #{state_data['name']}"
   capitals.insert(state_doc)
 end
