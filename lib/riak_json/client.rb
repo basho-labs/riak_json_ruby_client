@@ -155,7 +155,7 @@ module RiakJson
     # @param [String] query_params Arbitrary query parameters that will be passed to /solr/collectionRJIndex?... endpoint
     # @return [String] JSON result from the query
     def solr_query_raw(collection_name, query_params)
-      url = "#{self.base_riak_url}/search/#{self.collection_index_name(collection_name)}"
+      url = "#{self.base_riak_url}/search/query/#{self.collection_index_name(collection_name)}"
       self.transport.send_request(url, :get, query_params)
     end
     
